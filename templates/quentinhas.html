@@ -1,0 +1,17 @@
+{% extends 'home.html'%}
+
+{% block content %}
+<h3>{{ object.title }}</h3>
+<h5>{{ object.description }}</h5>
+
+
+{% for acomp in acompanhamentos%}
+    <div>{{forloop.counter}} - {{ acomp }} <input type="checkbox"/></div> 
+
+    <p><ol>{{forloop.counter}}</ol></p>
+    {% if 'F' in acomp %}
+    <p><ol>{{ acomp|cut:" "|center:"40" }}</ol></p>
+    {% endif %}
+    {%endfor%}
+<h4>R$ {{ object.price }} </h4>
+{% endblock %}
