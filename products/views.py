@@ -31,15 +31,18 @@ class QuentinhaDetailView(DetailView):
         return get_object_or_404(Quentinha, id=id_)
 
 
+
 def product_create_view(request):
-    form = Acompanha_Form(request.POST or None)
+    form_class = QuentinhaForm(request.POST or None)
+    successs_url = 'home/'
     if request.POST:
-        if form.is_valid():
-            form.save()
+        if form_class.is_valid():
+            form_class.save()
 
     context = {
-        'form': form,
+        'form': form_class,
     }
+
     return render (request, "product_detail.html", context)
 
 

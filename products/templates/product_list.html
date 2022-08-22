@@ -1,12 +1,12 @@
 {% extends 'home.html'%}
 
 {% block content %}
-<h1>PRODUCT LIST </h1>
+<h1 style='text-align:center'>Quentinhas Individuais </h1>
 {{ object.title }}
-<p>{{ object.price }}</p>
+<p style='text-align:center'>{{ object.price }}</p>
 
 
 {% for instance in object_list %}
-<p>{{ instance.id }} - <a href="{{instance.get_absolute_url}}"> {{instance.title}}</a></p>
+<p style='text-align:center'>{{ instance.id }} - <a href="{{instance.get_absolute_url}}"> {{instance.title}}</a></p>
 {% endfor %}
 {% endblock %}

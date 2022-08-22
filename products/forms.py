@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Acompanhamentos, Quentinha
+from .models import Acompanhamentos, Product, Quentinha
 
 class Quentinha_form(forms.ModelForm):
     class Meta:
@@ -10,7 +10,7 @@ class Quentinha_form(forms.ModelForm):
             'description',
             'price','acompanhamentos',
         ]
-
+        
     # def clean_titlte(self, *args, **kwargs):
     #     title = self.cleaned_data.get('title')
 
@@ -18,9 +18,10 @@ class Quentinha_form(forms.ModelForm):
 
 class QuentinhaForm(forms.ModelForm):
     class Meta:
-        model = Acompanhamentos
-        fields = ['acomp_choices']
-
+        model = Quentinha
+        fields = ['acompanhamentos']
+        unit = forms.MultipleChoiceField(choices=fields, widget=forms.CheckboxSelectMultiple,)
+        
 
 
 CHOICES_ACOMP = [
@@ -30,6 +31,6 @@ CHOICES_ACOMP = [
 ]
 
 class Acompanha_Form(forms.Form):
-    acompanhamentos = forms.MultipleChoiceField(choices=CHOICES_ACOMP, widget=forms.CheckboxSelectMultiple,)
+    acompanhamentos = forms.ChoiceField(choices=CHOICES_ACOMP, widget=forms.CheckboxSelectMultiple,)
     
 
