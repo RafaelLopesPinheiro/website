@@ -19,4 +19,9 @@ class RawProductForm(forms.Form):
     title = forms.CharField()
     description = forms.CharField()
     price = forms.DecimalField()
+    CHOICES_ACOMP = [
+        ('ARROZ_BRANCO','Arroz Branco'),
+        ('MACARRAO', 'Macarrão'),
+        ('FEIJAO_PRETO', 'Feijão Preto'),
+    ]
     acompanhamentos = forms.BooleanField(required=False)

@@ -1,1 +1,9 @@
 {% extends 'topbar.html'%}
+
+{% block content %}
+
+<h2>Bebidas</h2>
+{% for instance in bebida %}
+{{item.title}}
+{%endfor%}
+{%endblock%}

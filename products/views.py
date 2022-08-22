@@ -19,12 +19,12 @@ class FeijoadaView(ListView):
 
 class QuentinhasListView(ListView):
     template_name = 'product_list.html'
-    queryset = Product.objects.all()
+    queryset = Quentinha.objects.all()
     
 
 class QuentinhaDetailView(DetailView):
     template_name = 'product_detail.html'
-    queryset = Product.objects.all()
+    queryset = Quentinha.objects.all()
 
     def get_object(self):
         id_ = self.kwargs.get("id")
@@ -44,6 +44,10 @@ def product_detail_view(request, id):
 class BebidasView(ListView):
     template_name = 'bebidas.html'
     queryset = Bebida.objects.all()
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Bebida, id=id)
 
 
 
