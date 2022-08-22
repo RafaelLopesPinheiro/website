@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
 from .models import Quentinha, Product, Bebida
-from .forms import Quentinha_form, RawProductForm
+from .forms import Quentinha_form, QuentinhaForm, Acompanha_Form
 from django.utils.functional import LazyObject as _
 # Create your views here.
 
@@ -28,7 +28,19 @@ class QuentinhaDetailView(DetailView):
 
     def get_object(self):
         id_ = self.kwargs.get("id")
-        return get_object_or_404(Product, id=id_)
+        return get_object_or_404(Quentinha, id=id_)
+
+
+def product_create_view(request):
+    form = Acompanha_Form(request.POST or None)
+    if request.POST:
+        if form.is_valid():
+            form.save()
+
+    context = {
+        'form': form,
+    }
+    return render (request, "product_detail.html", context)
 
 
 

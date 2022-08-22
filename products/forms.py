@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Quentinha
+from .models import Acompanhamentos, Quentinha
 
 class Quentinha_form(forms.ModelForm):
     class Meta:
@@ -8,20 +8,28 @@ class Quentinha_form(forms.ModelForm):
         fields = [
             'title',
             'description',
-            'price',
+            'price','acompanhamentos',
         ]
-    def clean_titlte(self, *args, **kwargs):
-        title = self.cleaned_data.get('title')
+
+    # def clean_titlte(self, *args, **kwargs):
+    #     title = self.cleaned_data.get('title')
 
         
 
-class RawProductForm(forms.Form):
-    title = forms.CharField()
-    description = forms.CharField()
-    price = forms.DecimalField()
-    CHOICES_ACOMP = [
-        ('ARROZ_BRANCO','Arroz Branco'),
-        ('MACARRAO', 'Macarrão'),
-        ('FEIJAO_PRETO', 'Feijão Preto'),
-    ]
-    acompanhamentos = forms.BooleanField(required=False)
+class QuentinhaForm(forms.ModelForm):
+    class Meta:
+        model = Acompanhamentos
+        fields = ['acomp_choices']
+
+
+
+CHOICES_ACOMP = [
+    ('ARROZ_BRANCO','Arroz Branco'),
+    ('MACARRAO', 'Macarrão'),
+    ('FEIJAO_PRETO', 'Feijão Preto'),
+]
+
+class Acompanha_Form(forms.Form):
+    acompanhamentos = forms.MultipleChoiceField(choices=CHOICES_ACOMP, widget=forms.CheckboxSelectMultiple,)
+    
+

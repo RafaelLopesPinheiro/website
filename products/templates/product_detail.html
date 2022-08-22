@@ -13,21 +13,23 @@
           <tr scope="col" style=""> </tr> 
           <td> {{ forloop.counter }} - {{acomp}} <input type="checkbox" class="custom-control-input"/></td>
           {% endfor %}
-          <input type="checkbox" value='option1'>KDSAKK </input>
+          <p style="text-align: center"><input type="checkbox" type="submit" value='option1'>KDSAKK </input></p>
           <select multiple>.asdw..</select>
-          <form method="GET">
-            {{ form }}
-            
+          <form method="POST"> {% csrf_token %}
+            <div style="text-align: center">{{ form.as_p }}</div>
+            <p style="text-align: center"><input type="submit" value="Confirmar" class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" /></p>
+          </form>
+          
         </div>
    
     </thead>
   </table>
 
-<p style="text-align: center";><button class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Confirmar</button></p>
+{% comment %} <p style="text-align: center";><button class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Confirmar</button></p> {% endcomment %}
 
 
 
-<!-- RAW HTML CODE FOR TABLE WITH CONTENT AND CHECKBOX
+<!-- RAW HTML CODE FOR TABLE WITH CONTENT AND CHECKBOX    
 
 <div class="container">
     <div class="row">
@@ -85,5 +87,5 @@
     </div>
   </div>
 
-   -->
+-->
 {% endblock %}
