@@ -2,8 +2,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
-from .models import Quentinha, Product, Bebida
-from .forms import Quentinha_form, QuentinhaForm, Acompanha_Form
+from .models import Acompanhamentos, Quentinha, Product, Bebida, Feijoada
+from .forms import QuentinhaForm, Acompanha_Form
 from django.utils.functional import LazyObject as _
 # Create your views here.
 
@@ -14,7 +14,7 @@ def home_view(request, *args, **kwargs):
 
 class FeijoadaView(ListView):
     template_name = "feijoada_list.html"
-    queryset = Product.objects.all()
+    queryset = Feijoada.objects.all()
 
 
 class QuentinhasListView(ListView):
@@ -30,17 +30,25 @@ class QuentinhaDetailView(DetailView):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Quentinha, id=id_)
 
+    def create_order(request):
+        form = QuentinhaForm(request.POST or None)
+        success_url = 'home/'
+        if request.POST:
+            if form.is_valid():
+                form.save()
+        context = {'form': form}
+        return render(request, "product_detail.html", context)
 
-
+    
 def product_create_view(request):
-    form_class = QuentinhaForm(request.POST or None)
+    form = QuentinhaForm(request.POST or None)
     successs_url = 'home/'
     if request.POST:
-        if form_class.is_valid():
-            form_class.save()
+        if form.is_valid():
+            form.save()
 
     context = {
-        'form': form_class,
+        'form': form,
     }
 
     return render (request, "product_detail.html", context)

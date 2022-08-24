@@ -7,6 +7,17 @@
 
 
 {% for instance in object_list %}
-<p style='text-align:center'>{{ instance.id }} - <a href="{{instance.get_absolute_url}}"> {{instance.title}}</a></p>
+<table class='table'>
+<tbody>
+<td>
+    <tr>
+        <a href="{{instance.get_absolute_url}}"> <h2 style='text-align:center'> {{instance.title}} </h2></a>
+        <p style='text-align:center'> {{instance.description }} </p>
+        <p style='text-align:right' class='px-20'> R${{instance.price}}</p>
+    </tr>
+</td>
+</tbody>
+</table>
+
 {% endfor %}
 {% endblock %}

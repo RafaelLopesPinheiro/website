@@ -1,6 +1,20 @@
 {% extends 'home.html' %}
 
 {% block content %}
-<h1> FEIJOADAS </h1>
+<h1 style='text-align:center'> FEIJOADAS </h1>
 
+{% for instance in object_list %}
+<table class='table'>
+    <tbody>
+    <td>
+        <tr>
+            <a href="{{instance.get_absolute_url}}"> <h2 style='text-align:center'> {{instance.title}} </h2></a>
+            <p style='text-align:center'> {{instance.description }} </p>
+            <p style='text-align:right' class='px-20'> R${{instance.price}}</p>
+        </tr>
+    </td>
+    </tbody>
+    </table>
+    
+{%endfor%}
 {% endblock %}

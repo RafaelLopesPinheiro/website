@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.shortcuts import render
 
 
 # Create your models here.
@@ -13,7 +14,7 @@ class Acompanhamentos(models.Model):
 class Quentinha(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=150)
-    price = models.FloatField()
+    price = models.FloatField(null=True)
     acompanhamentos = models.ManyToManyField(Acompanhamentos)
 
 
@@ -82,3 +83,14 @@ class Order(models.Model):
     product = models.ForeignKey(Quentinha, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=150, null=True, choices=STATUS)
+    acompanhamentos = models.ManyToManyField(Acompanhamentos)
+
+
+
+
+def product_list(request):
+    object_list = Product.objects.all()
+    context = {
+        "object_list":object_list
+    }
+    return render(request, "products_list.html", context)
