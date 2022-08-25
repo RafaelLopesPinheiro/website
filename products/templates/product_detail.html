@@ -11,83 +11,24 @@
     <thead>
       <tr><h3 style="text-align: center";> Acompanhamentos </h3></tr>
       <div class="container">
-        {% for acomp in acompanhamentos %}
-          <tr scope="col" style=""> </tr> 
-          <td> {{ forloop.counter }} - {{acomp}} <input type="checkbox" class="custom-control-input"/></td>
-          {% endfor %}
-          <p style="text-align: center"><input type="checkbox" type="submit" value='option1'>KDSAKK </input></p>
-          
-          <form method="POST"> {% csrf_token %}
-            <div style="text-align: center">{{ form.as_p }}</div>
-            <p style="text-align: center"><input type="submit" value="Confirmar" class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" /></p>
-          </form>
-          
-        </div>
+        <form action="{% url 'products:finished' %}" method="POST"> {% csrf_token%}
+          {{form}}
+          <p><input type="submit" value="Confirmar" class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
+        </input>
+        </p>
+        </form>
+        {% comment %} {% for obj in object %} {% endcomment %}
+
+          {% comment %} <td> {{ forloop.counter }} - {{obj}} {% endcomment %}
+             {% comment %} <input type="checkbox" class="custom-control-input" value='{{obj.id}}' name='choices'/> {% endcomment %}
+          {% comment %} </td> {% endcomment %}
+          {% comment %} {% endfor %} {% endcomment %}
+          {% comment %} {{acomp}} {% endcomment %}
+
+      </div>
    
     </thead>
   </table>
 
-{% comment %} <p style="text-align: center";><button class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Confirmar</button></p> {% endcomment %}
 
-
-
-<!-- RAW HTML CODE FOR TABLE WITH CONTENT AND CHECKBOX    
-
-<div class="container">
-    <div class="row">
-      <div class="col-12" >
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">Select Day</th>
-              <th scope="col">Article Name</th>
-              <th scope="col">Author</th>
-              <th scope="col">Words</th>
-              <th scope="col">Shares</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked>
-                    <label class="custom-control-label" for="customCheck1">1</label>
-                </div>
-              </td>
-              <td>Bootstrap 4 CDN and Starter Template</td>
-              <td>Cristina</td>
-              <td>913</td>
-              <td>2.846</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck2">
-                    <label class="custom-control-label" for="customCheck2">2</label>
-                </div>
-              </td>
-              <td>Bootstrap Grid 4 Tutorial and Examples</td>
-              <td>Cristina</td>
-              <td>1.434</td>
-              <td>3.417</td>
-            </tr>
-            <tr>
-              <td>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck3">
-                    <label class="custom-control-label" for="customCheck3">3</label>
-                </div>
-              </td>
-              <td>Bootstrap Flexbox Tutorial and Examples</td>
-              <td>Cristina</td>
-              <td>1.877</td>
-              <td>1.234</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
--->
 {% endblock %}

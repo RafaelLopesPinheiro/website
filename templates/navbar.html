@@ -1,7 +1,13 @@
-<nav>
+<nav class="navbar navbar-light" style="background-color: white;">
     <div class='container'>
-        <div class='w-6/12'>
-            <a href="{% url 'products:quentinha-list' %}"><button ><h3>< Voltar <i class='box-arrow-in-left'></i></h3></button></a>
+        <div class='w-6/12 flex flex-nowrap'>
+            <a href="{% url 'products:quentinha-list' %}">
+                <button ><h3> Voltar </h3>
+                </button>
+            </a>
+        </div>
+        <div class='w-6/12'>    
+            <h3 style='text:align:right'> {{object.title}} </h3>
         </div>
         <hr style="border-bottom: 1px solid black";></hr>
     </div>

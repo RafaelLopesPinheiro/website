@@ -1,9 +1,9 @@
 
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, FormView, CreateView
 from .models import Acompanhamentos, Quentinha, Product, Bebida, Feijoada
-from .forms import QuentinhaForm, Acompanha_Form
+from .forms import QuentinhaForm, Acompanha_Form, Book_form
 from django.utils.functional import LazyObject as _
 # Create your views here.
 
@@ -25,43 +25,50 @@ class QuentinhasListView(ListView):
 class QuentinhaDetailView(DetailView):
     template_name = 'product_detail.html'
     queryset = Quentinha.objects.all()
-
+    form_class = Book_form
+    print(form_class)
     def get_object(self):
-        id_ = self.kwargs.get("id")
+        id_ = self.kwargs.get("id") ## ID of Quentinha
         return get_object_or_404(Quentinha, id=id_)
 
-    def create_order(request):
-        form = QuentinhaForm(request.POST or None)
-        success_url = 'home/'
-        if request.POST:
-            if form.is_valid():
-                form.save()
-        context = {'form': form}
-        return render(request, "product_detail.html", context)
 
     
-def product_create_view(request):
-    form = QuentinhaForm(request.POST or None)
-    successs_url = 'home/'
+    
+
+class BookView(FormView):
+    template_name = 'product_detail.html'
+    form_class = Book_form
+    success_url = '/'
+
+    def form_valid(request, form):
+        return super().form_valid(form)
+
+
+    
+
+def product_create_view(request, id):
+    form = Book_form(request.POST or None)
+    successs_url = 'home.html'
+    
+    def get_object(self):
+        id_ = self.kwargs.get("id") ## ID of Quentinha
+        return get_object_or_404(Quentinha, id=id_)    
+    
+    
+    
+    object = Quentinha.objects.get(id=1)
+    
     if request.POST:
         if form.is_valid():
             form.save()
-
+        return render(request, successs_url)
     context = {
         'form': form,
+        'object': object
     }
-
+    
     return render (request, "product_detail.html", context)
 
-
-
-def product_detail_view(request, id):
-    obj = get_object_or_404(Product, id=id)
-    context = {
-        "object": obj ,
-        "acompanhamentos":['arroz branco', 'feijao preto','macarrao', 'maionese' ],
-    }
-    return render(request, "product_detail.html", context)
 
 
 class BebidasView(ListView):

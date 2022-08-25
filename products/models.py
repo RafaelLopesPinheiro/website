@@ -86,11 +86,3 @@ class Order(models.Model):
     acompanhamentos = models.ManyToManyField(Acompanhamentos)
 
 
-
-
-def product_list(request):
-    object_list = Product.objects.all()
-    context = {
-        "object_list":object_list
-    }
-    return render(request, "products_list.html", context)
