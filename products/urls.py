@@ -9,9 +9,8 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('feijoadas/', FeijoadaView.as_view(), name='feijoada-list'),
     path('quentinhas/', QuentinhasListView.as_view(), name='quentinha-list'),
-    path('quentinhas/<int:id>', QuentinhaDetailView.as_view(), name='quentinha-detail'),   
+    path('quentinhas/<int:id>', product_create_view, name='quentinha-detail'),   
     path('bebidas/', BebidasView.as_view(), name='bebidas'),
     path('finish/<int:id>', product_create_view, name='create-order'),
-    path('book_item/', BookView.as_view(), name='book-item'),
-    path('finished/', BookView.as_view(), name='finished'),
+    path('finish_order/', BookView.as_view(), name='book-item'),
 ]
