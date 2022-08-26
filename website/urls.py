@@ -21,4 +21,5 @@ from products.views import home_view
 urlpatterns = [
     path('admin/', admin.site.urls), 
     path('', include('products.urls', namespace='products')),
+    path('', include('cart.urls', namespace='cart')),
 ]
