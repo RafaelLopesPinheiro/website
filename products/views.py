@@ -2,8 +2,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, FormView, CreateView, TemplateView
-from .models import Acomp, Acompanhamentos, Quentinha, Product, Bebida, Feijoada, Order
-from .forms import QuentinhaForm, Acompanha_Form, Book_form
+from .models import Acompanhamentos, Quentinha, Extra, Bebida, Feijoada
+from .forms import Acompanha_Form, Book_form
 from django.utils.functional import LazyObject as _
 from cart.models import Cart
 from django.contrib.auth.decorators import login_required
@@ -81,28 +81,3 @@ class BebidasView(ListView):
         id_ = self.kwargs.get("id")
         return get_object_or_404(Bebida, id=id)
 
-
-
-
-def acomp_form(request):
-    form = QuentinhaForm(request.POST or None)
-    context = {'form':form}
-    
-    if form.is_valid():
-        form.save()
-        print(form)
-    else: 
-        form = QuentinhaForm()
-    return render(request, 'finish_order.html', context)
-
-
-
-# def savevalues(request):
-#     if request.method == "POST":
-#         if request.POST.get('acomp_name'):
-#             savedata = Acompanhamentos()
-#             savedata.acomp_choices=request.POST.get('acomp_name')
-#             savedata.save()
-#             return render(request, 'finish_order.html')
-#     else:
-#             return render(request,'finish_order.html')

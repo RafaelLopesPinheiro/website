@@ -2,9 +2,6 @@ from django.db import models
 from django.urls import reverse
 from django.shortcuts import render
 
-
-
-
 # Create your models here.
 class Acompanhamentos(models.Model):
     acomp_choices = models.CharField(max_length=50)
@@ -18,7 +15,7 @@ class Quentinha(models.Model):
     description = models.TextField(max_length=150)
     price = models.FloatField(null=True)
     acompanhamentos = models.ManyToManyField(Acompanhamentos)
-
+    thumb = models.ImageField(blank=True)
 
     def get_absolute_url(self):
         return reverse("products:quentinha-detail", kwargs={"id": self.id})
@@ -32,7 +29,7 @@ class Feijoada(models.Model):
     description = models.TextField(max_length=150)
     price = models.FloatField()
     extras = models.BooleanField(default=False)
-
+    thumb = models.ImageField(blank=True)
 
     def __str__(self):
         return self.title
@@ -40,7 +37,7 @@ class Feijoada(models.Model):
 
 class Bebida(models.Model):
     title = models.CharField(max_length=50)
-    thumb = models.ImageField()
+    thumb = models.ImageField(blank=True)
     price = models.FloatField()
 
     def __str__(self):
@@ -48,11 +45,10 @@ class Bebida(models.Model):
 
 
 
-class Product(models.Model):
+class Extra(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=150)
     price = models.FloatField(null=True, blank=True)
-    acompa = models.ManyToManyField(Acompanhamentos)
 
 
     def get_absolute_url(self):
@@ -62,43 +58,7 @@ class Product(models.Model):
         return self.title
 
 
-class Customer(models.Model):
-    name = models.CharField(max_length=75)
-    adress = models.CharField(max_length=200)
-    phone = models.CharField(max_length=20)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-
-    def __str__(self):
-        return self.name
 
 
 
-
-class Order(models.Model):
-    STATUS = (
-        ('Pending', 'Pending'),
-        ('Out for delivery', 'Out for delivery'),
-        ('Delivered', 'Delivered'),
-    )
-
-    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
-    product = models.ForeignKey(Quentinha, null=True, on_delete=models.SET_NULL)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-    status = models.CharField(max_length=150, null=True, choices=STATUS)
-    acompanhamentos = models.ManyToManyField(Acompanhamentos)
-
-
-
-class Acomp(models.Model):
-    
-    ACOMP_CHOICES = [
-    ('ARROZ_BRANCO','Arroz Branco'),
-    ('MACARRAO', 'Macarrão'),
-    ('FEIJAO_PRETO', 'Feijão Preto'),
-    ]
-
-    acomps = models.CharField(max_length=15, choices=ACOMP_CHOICES, default='MACARRAO')
-    
-    def __str__(self):
-        return self.acomps
     
