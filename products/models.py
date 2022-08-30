@@ -3,6 +3,8 @@ from django.urls import reverse
 from django.shortcuts import render
 
 
+
+
 # Create your models here.
 class Acompanhamentos(models.Model):
     acomp_choices = models.CharField(max_length=50)
@@ -30,7 +32,7 @@ class Feijoada(models.Model):
     description = models.TextField(max_length=150)
     price = models.FloatField()
     extras = models.BooleanField(default=False)
-    # testando = models.CharField(max_length=15, choices=CHOICES_RANDOM)
+
 
     def __str__(self):
         return self.title
@@ -86,3 +88,17 @@ class Order(models.Model):
     acompanhamentos = models.ManyToManyField(Acompanhamentos)
 
 
+
+class Acomp(models.Model):
+    
+    ACOMP_CHOICES = [
+    ('ARROZ_BRANCO','Arroz Branco'),
+    ('MACARRAO', 'Macarrão'),
+    ('FEIJAO_PRETO', 'Feijão Preto'),
+    ]
+
+    acomps = models.CharField(max_length=15, choices=ACOMP_CHOICES, default='MACARRAO')
+    
+    def __str__(self):
+        return self.acomps
+    

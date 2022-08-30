@@ -6,25 +6,36 @@
 
 <h2 style="text-align: center";>{{ object.title }}</h2>
 <p style="text-align: center";> {{ object.description }}</p>
-<h4><p style="text-align: center";>Valor: R${{ object.price }}</h4></p>
+<h4><p style="text-align: center";>Valor: R${{ object.price|floatformat:2 }}</h4></p>
   <table class="table table-bordered" style="text-align: center";>
     <thead>
-      <tr><h3 style="text-align: center";> Acompanhamentos </h3></tr>
+      <tr>
+        <h3 style="text-align: center";> Acompanhamentos </h3>
+      </tr>
       <div class="container">
-        <form action="" method="POST">
-          {% csrf_token%}
+        <form action="" method="POST"> {% csrf_token %}
+          
+          <table class='table table-bordered'>
+            <tbody>
           {% for field in form %}
-          <tr><td><p style='text-align:justify';>{{field }}</p></td></tr>
+
+          <td>
+
+              <td>
+                <input><p style='text-align:center';> {{ field }} </p></input>
+              </td>
+
+          </td>
+          
           {% endfor %}
+          </tbody>  
+          </table>
+          <input type='submit' value='Confirmar' class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" ></input>
         </form>        
       </div>
     </thead>
-    <p>
-      <td>
-        <input type="submit" value="Confirmar" class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" />
-      </input>
-      </td>
-    </p>  
+  
   </table>
+
 
 {% endblock %}

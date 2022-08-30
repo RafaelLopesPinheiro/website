@@ -1,8 +1,36 @@
 {% extends 'home.html'%}
 
 
-{% block content %}
 <p style="text-align: center">DESEJA CONCLUIR O PEDIDO? </p>
 <p style="text-align: center"><button>CONFIRMAR</button></p>
+
+
+{% block content %}
+
+<body>
+    <center>
+        <h3> INSERINDO CHECKBOX DATA IN SQLITE </h3>
+        
+        <form method="POST">
+            {% csrf_token %}
+        Acompanhamentos:
+
+    
+        <input type='text' name='acomp_names' value=''/>  
+        <input type='submit' value='Enviar Pedido' class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"/>
+        
+        
+        <input type="checkbox" id='{{form.acomps}}' name="acomps" value="{{ form.acomps }}" {% if item in acomps %} checked="checked" {% endif %} /> 
+        <label for="id_acomps_{{ forloop.counter0 }}"/>
+
+        <br>
+
+
+    
+    </center>
+</body>
+
+
+
 
 {% endblock %}

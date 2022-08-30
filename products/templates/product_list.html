@@ -13,7 +13,7 @@
     <tr>
         <a href="{{instance.get_absolute_url}}"> <h2 style='text-align:center'> {{instance.title}} </h2></a>
         <p style='text-align:center'> {{instance.description }} </p>
-        <h3><p style='text-align:center' class='px-20'> R${{instance.price}}</p></h3>
+        <h3><p style='text-align:center' class='px-20'> R$ {{instance.price|floatformat:2}}</p></h3>
     </tr>
 </td>
 </tbody>

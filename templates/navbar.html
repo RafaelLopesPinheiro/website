@@ -1,14 +1,21 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
 <nav class="navbar navbar-light" style="background-color: white;">
-    <div class='container'>
-        <div class='w-6/12 flex flex-nowrap'>
+    <div class='container-fluid'>
+        <div class='w-6/12'>
             <a href="{% url 'products:quentinha-list' %}">
-                <button ><h3> Voltar </h3>
+                <button>
+                    <h2><i class="bi bi-arrow-left">Voltar</i></h2>
                 </button>
             </a>
         </div>
+
         <div class='w-6/12'>    
-            {% comment %} <h3 style='text:align:justify'> {{object.title}} </h3> {% endcomment %}
+            <h3 style='text:align:justify'> {{object.title}} </h3>
         </div>
+        
         <hr style="border-bottom: 1px solid black";></hr>
     </div>
 </nav>
+
+

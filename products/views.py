@@ -1,10 +1,12 @@
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, FormView, CreateView, TemplateView
-from .models import Acompanhamentos, Quentinha, Product, Bebida, Feijoada
+from .models import Acomp, Acompanhamentos, Quentinha, Product, Bebida, Feijoada, Order
 from .forms import QuentinhaForm, Acompanha_Form, Book_form
 from django.utils.functional import LazyObject as _
+from cart.models import Cart
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -34,41 +36,39 @@ class QuentinhaDetailView(DetailView):
 
 
     
-    
 
 class BookView(FormView):
-    template_name = 'product_detail.html'
+    template_name = 'finish_order.html'
     form_class = Book_form 
     success_url = '/'
     
     def form_valid(request, form):
         return super().form_valid(form)
     
-    def get(self, request):
-        id_ = request.GET.get('id')
-        return render(request, self.template_name, {'post': get_object_or_404(Quentinha, pk=id_)})
+    # def get(self, request):
+    #     id_ = request.GET.get('id')
+    #     return render(request, self.template_name, {'post': get_object_or_404(Quentinha, pk=id_)})
 
 
     
-
+@login_required
 def product_create_view(request, id):
     form = Book_form(request.POST or None)
     successs_url = 'home.html'
     object = Quentinha.objects.get(id=id)
-    
-    # def get_object(self, id):
-    #     object = Quentinha.objects.get(id=id)
-    #     return get_object_or_404(Quentinha, id=id)    
-    
-    if request.POST:
-        if form.is_valid():
-            form.save('orders')
-        return render(request, successs_url)
     context = {
         'form': form,
-        'object': object
+        'object': object,
     }
-    
+    if request.method == "POST":
+        form = Book_form(request.POST)
+        if form.is_valid() and form.cleaned_data:
+            Cart.objects.create(user=request.user, acomps=form.cleaned_data)
+            return render (request, "finish_order.html", context)
+        else:
+            print(form.errors)
+            
+            
     return render (request, "product_detail.html", context)
 
 
@@ -83,3 +83,26 @@ class BebidasView(ListView):
 
 
 
+
+def acomp_form(request):
+    form = QuentinhaForm(request.POST or None)
+    context = {'form':form}
+    
+    if form.is_valid():
+        form.save()
+        print(form)
+    else: 
+        form = QuentinhaForm()
+    return render(request, 'finish_order.html', context)
+
+
+
+# def savevalues(request):
+#     if request.method == "POST":
+#         if request.POST.get('acomp_name'):
+#             savedata = Acompanhamentos()
+#             savedata.acomp_choices=request.POST.get('acomp_name')
+#             savedata.save()
+#             return render(request, 'finish_order.html')
+#     else:
+#             return render(request,'finish_order.html')
