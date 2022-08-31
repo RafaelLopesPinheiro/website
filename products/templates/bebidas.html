@@ -1,10 +1,25 @@
 {% extends 'home.html'%}
+{% load static %}
+
 
 {% block content %}
+<h2 style='text-align:center'>Bebidas</h2>
 
-<h2>Bebidas</h2>
-<p>{{object.title}}</p>
-<p>{{object.description}}</p>
-<p>{{object.price}}</p>
+{% for instance in object_list %}
+
+<table class='table'>
+    <tbody>
+    <td>
+        <tr>
+            <a href="{{instance.get_absolute_url}}"> <h2 style='text-align:center'> {{instance.title}} </h2></a>
+            <p> <img src="{% static 'img/cocacola.jpg' %}" height='70' width='70' style='float: right'></img></p>
+            <h3><p style='text-align:center' class='px-20'> R$ {{instance.price|floatformat:2}}</p></h3>
+        </tr>
+    </td>
+    </tbody>
+    </table>
+
+{% endfor %}
+
 
 {% endblock %}

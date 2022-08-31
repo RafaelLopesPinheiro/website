@@ -76,8 +76,13 @@ def product_create_view(request, id):
 class BebidasView(ListView):
     template_name = 'bebidas.html'
     queryset = Bebida.objects.all()
+    print(queryset)
 
-    def get_object(self):
-        id_ = self.kwargs.get("id")
-        return get_object_or_404(Bebida, id=id)
+# class BebidasDetailView(DetailView):
+#     template_name = 'bebidas_detail.html'
+#     queryset = Bebida.objects.get('id')    
+    
+#     def get_object(self):
+#         id_ = self.kwargs.get("id")
+#         return get_object_or_404(Bebida, id=id)
 
