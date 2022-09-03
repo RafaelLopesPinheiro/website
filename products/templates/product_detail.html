@@ -1,7 +1,14 @@
 {% extends 'home.html'%}
 
-{% block content %}
+{% block head %}
 {% include 'navbar.html'%}
+{% endblock %}
+
+
+
+
+{% block content %}
+{% comment %} {% include 'navbar.html'%} {% endcomment %}
 
 
 {% comment %} <h2 style="text-align: center";>{{ object.title }}</h2> {% endcomment %}
@@ -27,6 +34,12 @@
 
           </td>
           
+          
+          
+          
+
+
+          
           {% endfor %}
           </tbody>  
           </table>
@@ -36,6 +49,5 @@
     </thead>
   
   </table>
-
 
 {% endblock %}

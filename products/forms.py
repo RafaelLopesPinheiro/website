@@ -9,22 +9,18 @@ ACOMP_CHOICES = [
 ]        
 
 
-# class QuentinhaForm(forms.ModelForm):
-#     acomps = forms.MultipleChoiceField(choices=ACOMP_CHOICES, widget=forms.CheckboxSelectMultiple())
-#     class Meta:
-#         model = Acompanhamentos
-#         fields = ('acomp_choices',)     
-
-
-
 class Book_form(forms.Form):
 
-    acompanhamentos = forms.ModelMultipleChoiceField(
-                        queryset=Acompanhamentos.objects.all(),
-                        widget=forms.CheckboxSelectMultiple)
+    # acompanhamentos = forms.ModelMultipleChoiceField(
+    #                     queryset=Acompanhamentos.objects.all(),
+    #                     widget=forms.CheckboxSelectMultiple,)
+    
+    acompanhamentos = forms.ModelMultipleChoiceField(queryset=Acompanhamentos.objects.all(),
+                                                     
+                    )
     class Meta:
         model = Acompanhamentos
-        fields = ['acomp_choices']
+        fields = ['acomp_choices','id']
 
 
 

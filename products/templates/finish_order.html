@@ -5,7 +5,7 @@
 <p style="text-align: center"><button>CONFIRMAR</button></p>
 
 
-{% block content %}
+{% comment %} {% block content %} {% endcomment %}
 
 <body>
     <center>
@@ -31,6 +31,110 @@
 </body>
 
 
+{% comment %} {% extends 'home.html'%} {% endcomment %}
+
+{% block head %}
+{% include 'navbar.html'%}
+{% load static %}
+
+<script src="{% static 'js/incrementButtons.js' %}"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link href="{% static 'js/style.css'%}" type="text/css">
+
+
+
+{% endblock head%}
+
+
+
+
+{% block content %}
+{% comment %} {% include 'navbar.html'%} {% endcomment %}
+
+
+
+
+<!-- JS TEST AREA BELLOW  -->
+
+
+
+
+{% comment %} <h2 style="text-align: center";>{{ object.title }}</h2> {% endcomment %}
+<p style="text-align: center";> {{ object.description }}</p>
+<h4><p style="text-align: center";>Valor: R${{ object.price|floatformat:2 }}</h4></p>
+  <table class="table table-bordered" style="text-align: center";>
+    <thead>
+      <tr>
+        <h3 style="text-align: center";> Acompanhamentos </h3>
+      </tr>
+      <div class="container">
+        <form action="" method="POST"> {% csrf_token %}
+          
+          <table class='table table-bordered'>
+            <tbody>
+          {% for field in form %}
+              
+          <td>
+
+              <td>
+                <span><p style='text-align:center';> {{ field }} </p></span>
+              </td>
+
+          </td>
+          
+          
+          
+          
+
+
+          
+          {% endfor %}
+          </tbody>  
+          </table>
+          <input type='submit' value='Confirmar' class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" ></input>
+        </form>        
+      </div>
+    </thead>
+  
+  </table>
+
+
+
+  <h2>Escolha seus acompanhamentos: </h2>
+    <div class='d-flex align-items-center justify-content-center'>
+    <p></p>
+    {% for field in form %}
+    {% for campo in field %}
+
+      <div class=' flex-sm-row'>
+      <div class='inline-block' style='text-align:center'>{{campo}}</div>
+      <button class=" btn btn-danger " style='border-radius:50%; ' onclick="decrementButton()" > - </button>
+      <button><h2 id='incrementText' >0 </h2></button>
+      <button class="btn btn-primary" style='border-radius:50%' onclick="incrementButton()" > + </button>
+
+
+      {%endfor%}  
+        {%endfor%}
+      </div>
+    </div>
+
+{% comment %} 
+    <form action="/your-name/" method="post">
+      {% for field in form %}
+      {% for campo in field %}
+      <label for="your_name">Your name: </label>
+      <input id="your_name" type="text" name="your_name" value="{{ campo }}">
+      <input type="submit" value="OK">
+      {%endfor%}
+      {%endfor%} {% endcomment %}
+  </form>
+
 
 
 {% endblock %}
+
+{% comment %} {% endblock %} {% endcomment %}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="wrapper">
+        <button class="plus"> + </button>
+        <button class="num"> 00 </button>
+        <button class="minus"> - </button>
+
+    </div>
+
+    <script>
+        const plus = document.querySelector('.plus');
+         minus = document.querySelector('.minus');
+         num = document.querySelector('.num');
+
+         let a = 0;
+
+        plus.addEventListener("click", ()=>{
+            if (a > 3){
+                num.innerText = a;
+                
+            }
+            else {
+                a++;
+                a = (a < 10) ? "0" + a : a;             
+                num.innerText = a;   
+            }
+            
+            /* a++;
+            a = (a < 10) ? "0" + a : a;
+            num.innerText = a; */
+
+        });
+
+        minus.addEventListener("click", ()=>{
+            if (a > 0){
+                a--;
+                a = (a < 10) ? "0" + a : a;
+                num.innerText = a;
+            }
+        })
+
+
+
+
+    </script>
+
+
+</body>
+</html>
