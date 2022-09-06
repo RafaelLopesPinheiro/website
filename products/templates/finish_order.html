@@ -109,18 +109,49 @@
     <p></p>
     {% for field in form %}
     {% for campo in field %}
-
-      <div class=' flex-sm-row'>
-      <div class='inline-block' style='text-align:center'>{{campo}}</div>
-      <button class=" btn btn-danger " style='border-radius:50%; ' onclick="decrementButton()" > - </button>
-      <button><h2 id='incrementText' >0 </h2></button>
-      <button class="btn btn-primary" style='border-radius:50%' onclick="incrementButton()" > + </button>
+  
 
 
+
+    <div class=' flex-sm-row border'>
+    <div class='inline-block ' style='text-align:center'>{{campo}}</div>
+
+      <button class=" btn btn-danger decrement-btn" style='border-radius:50%; ' onclick="decrementButton()" class='{{campo.id_for_label}}' > - </button>
+      <button><p id='{{campo.id_for_label}}'> 0 </p></button>
+      <button><p id='incrementText'> 0 </p></button>
+      {% comment %} <button><h2 id='incrementText-1'> {{campo.id_for_label }} </h2></button> {% endcomment %}
+      <button class="btn btn-primary increment-btn" style='border-radius:50%' onclick="incrementButton('{{campo.id_for_label}}')"> + </button>
+                                                                            
+      
       {%endfor%}  
         {%endfor%}
       </div>
     </div>
+  </div>
+  <div><input value='Observações' id='observacoes'></input>
+
+
+{% comment %} 
+    <div class='inline-block ' style='text-align:center'>{{campo}}</div>
+    
+      <button class=" btn btn-danger " style='border-radius:50%; ' onclick="decrementButton()" > - </button>
+      <button><h2 id='incrementText' >0 </h2></button>
+      <button class="btn btn-primary" style='border-radius:50%' onclick="incrementButton()" > + </button> {% endcomment %}
+      
+
+
+    </div>
+    
+    
+    <div id='f'>
+      
+    </div>
+    </div>
+
+
+
+
+
 
 {% comment %} 
     <form action="/your-name/" method="post">
@@ -134,7 +165,7 @@
   </form>
 
 
-
+fim da body
 {% endblock %}
 
 {% comment %} {% endblock %} {% endcomment %}
