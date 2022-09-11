@@ -1,51 +1,24 @@
 {% extends 'home.html'%}
 
 
-<p style="text-align: center">DESEJA CONCLUIR O PEDIDO? </p>
-<p style="text-align: center"><button>CONFIRMAR</button></p>
-
-
-{% comment %} {% block content %} {% endcomment %}
-
-<body>
-    <center>
-        <h3> INSERINDO CHECKBOX DATA IN SQLITE </h3>
-        
-        <form method="POST">
-            {% csrf_token %}
-        Acompanhamentos:
-
-    
-        <input type='text' name='acomp_names' value=''/>  
-        <input type='submit' value='Enviar Pedido' class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"/>
-        
-        
-        <input type="checkbox" id='{{form.acomps}}' name="acomps" value="{{ form.acomps }}" {% if item in acomps %} checked="checked" {% endif %} /> 
-        <label for="id_acomps_{{ forloop.counter0 }}"/>
-
-        <br>
-
-
-    
-    </center>
-</body>
-
-
-{% comment %} {% extends 'home.html'%} {% endcomment %}
-
 {% block head %}
 {% include 'navbar.html'%}
 {% load static %}
 
-<script src="{% static 'js/incrementButtons.js' %}"></script>
+<script src="{% static '/js/jquery-3.6.1.min.js' %}"> </script>
+<script src="{% static '/js/incrementButtons.js' %}"> </script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<link href="{% static 'js/style.css'%}" type="text/css">
+<link href="{% static '/js/style.css'%}" type="text/css">
 
-
+<style>
+  .box-shadow {
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2)
+}
+</style>
 
 {% endblock head%}
 
@@ -62,110 +35,39 @@
 
 
 
-
-{% comment %} <h2 style="text-align: center";>{{ object.title }}</h2> {% endcomment %}
-<p style="text-align: center";> {{ object.description }}</p>
-<h4><p style="text-align: center";>Valor: R${{ object.price|floatformat:2 }}</h4></p>
-  <table class="table table-bordered" style="text-align: center";>
-    <thead>
-      <tr>
-        <h3 style="text-align: center";> Acompanhamentos </h3>
-      </tr>
-      <div class="container">
-        <form action="" method="POST"> {% csrf_token %}
-          
-          <table class='table table-bordered'>
-            <tbody>
-          {% for field in form %}
-              
-          <td>
-
-              <td>
-                <span><p style='text-align:center';> {{ field }} </p></span>
-              </td>
-
-          </td>
-          
-          
-          
-          
-
-
-          
-          {% endfor %}
-          </tbody>  
-          </table>
-          <input type='submit' value='Confirmar' class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" ></input>
-        </form>        
-      </div>
-    </thead>
-  
-  </table>
-
-
-
-  <h2>Escolha seus acompanhamentos: </h2>
-    <div class='d-flex align-items-center justify-content-center'>
+<h2>Escolha seus acompanhamentos: </h2>
+{% comment %} <form action='' method="POST"> {% csrf_token %} {% endcomment %}
+<div class='d-flex-sm justify-content-center'>
     <p></p>
+    
+
     {% for field in form %}
+    <div class='container flex-sm-row border'>
     {% for campo in field %}
-  
-
-
-
-    <div class=' flex-sm-row border'>
-    <div class='inline-block ' style='text-align:center'>{{campo}}</div>
-
-      <button class=" btn btn-danger decrement-btn" style='border-radius:50%; ' onclick="decrementButton()" class='{{campo.id_for_label}}' > - </button>
-      <button><p id='{{campo.id_for_label}}'> 0 </p></button>
-      <button><p id='incrementText'> 0 </p></button>
-      {% comment %} <button><h2 id='incrementText-1'> {{campo.id_for_label }} </h2></button> {% endcomment %}
-      <button class="btn btn-primary increment-btn" style='border-radius:50%' onclick="incrementButton('{{campo.id_for_label}}')"> + </button>
-                                                                            
+    
+    <div class='row' style='text-align:center'>{{campo}}</div>
+    <button class=" btn btn-danger box-shadow float-end" onClick="decrementButton('acomp_qty_{{forloop.counter0}}')" style='border-radius:50%; items-align:right'> - </button>
+    <p class='inline-block qty-input float-center ' style='text-align:right' id='acomp_qty_{{forloop.counter0}}'>0</p>
+    <button class="btn btn-success box-shadow float-end" style='border-radius:50%' onClick="incrementButton('acomp_qty_{{forloop.counter0}}')"> + </button>
+    
       
+
       {%endfor%}  
-        {%endfor%}
-      </div>
+      {%endfor%}
     </div>
   </div>
-  <div><input value='Observações' id='observacoes'></input>
-
-
-{% comment %} 
-    <div class='inline-block ' style='text-align:center'>{{campo}}</div>
-    
-      <button class=" btn btn-danger " style='border-radius:50%; ' onclick="decrementButton()" > - </button>
-      <button><h2 id='incrementText' >0 </h2></button>
-      <button class="btn btn-primary" style='border-radius:50%' onclick="incrementButton()" > + </button> {% endcomment %}
-      
+</div>
+<div><input class='flex-sm-row border' type='text' value='Observações' id='observacoes'></input>
+  <input type='submit' value='Confirmar' class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" ></input>
+  
 
 
     </div>
     
-    
-    <div id='f'>
-      
-    </div>
     </div>
 
-
-
-
-
-
-{% comment %} 
-    <form action="/your-name/" method="post">
-      {% for field in form %}
-      {% for campo in field %}
-      <label for="your_name">Your name: </label>
-      <input id="your_name" type="text" name="your_name" value="{{ campo }}">
-      <input type="submit" value="OK">
-      {%endfor%}
-      {%endfor%} {% endcomment %}
   </form>
 
 
-fim da body
 {% endblock %}
 
-{% comment %} {% endblock %} {% endcomment %}

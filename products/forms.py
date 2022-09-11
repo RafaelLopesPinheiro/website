@@ -14,7 +14,7 @@ class Book_form(forms.Form):
 
     acompanhamentos = forms.ModelMultipleChoiceField(
                         queryset=Acompanhamentos.objects.all(),
-                        widget=forms.CheckboxSelectMultiple,)
+                        )
     
     # acompanhamentos = forms.ModelMultipleChoiceField(queryset=Acompanhamentos.objects.all(),)
     
@@ -22,12 +22,12 @@ class Book_form(forms.Form):
         model = Acompanhamentos
         fields = ['acomp_choices','id']
     
-    def clean_acomp_choices(self):
-        data = self.cleaned_data['acompanhamentos']
-        if len(data)>3:
-            raise forms.ValidationError('You cant select more than 3 options.')
+    # def clean_acomp_choices(self):
+    #     data = self.cleaned_data['acompanhamentos']
+    #     if len(data)>3:
+    #         raise forms.ValidationError('You cant select more than 3 options.')
         
-        return data    
+        # return data    
     
 
 
