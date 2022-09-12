@@ -1,45 +1,36 @@
 
-let increments = document.getElementsByClassName('btn-increment');
-let decrements = document.getElementsByClassName('btn-decrement');
+var decrements = document.querySelectorAll('.btn-decrement');
+var increments = document.querySelectorAll('.btn-increment');
 let counter = document.querySelectorAll(".numb");
 
-for (let j=0; j<counter.length; j++){
-    let value = counter[j].innerHTML
-    console.log(value)
-    
-for (let i=0; i < increments.length; i++){
-    increments[i].addEventListener("click", function() {
-        value++;
-        counter[j].innerHTML = value;
-        console.log(counter)
-        });
-    }
-    
-    for (let i=0; i < decrements.length; i++){
-    decrements[i].addEventListener("click", function() {
-        value--;
-        // console.log(counter);
-        counter[j].innerHTML = value;
+let sum = 0;
+for (let i = 0; i < counter.length; i++){
+        sum += parseInt(counter[i].innerHTML);
+        console.log(counter[i].innerHTML)
+};
+
+
+decrements.forEach((decrement) => {
+    decrement.addEventListener("click",function(e){
+        if(sum > 0){
+            e.preventDefault()
+            e.target.nextElementSibling.innerHTML--;
+            sum--;
+        } else {
+            // delete the item, etc
+        }
     });
-    }
-}
+});
 
-// let value = counter[0].innerHTML // iterate over array [0],[1]
-
-// console.log(value);
-
-// for (let i=0; i < increments.length; i++){
-// increments[i].addEventListener("click", function() {
-//     value++;
-//     counter[i].innerHTML = value;
-//     console.log(counter)
-//     });
-// }
-
-// for (let i=0; i < decrements.length; i++){
-// decrements[i].addEventListener("click", function() {
-//     value--;
-//     // console.log(counter);
-//     counter[i].innerHTML = value;
-// });
-// }
+increments.forEach((increment) => {
+    increment.addEventListener("click",function(e){
+        if(sum>=4){
+            increments.disabled = true;
+        } else {
+            e.preventDefault()
+            e.target.previousElementSibling.innerHTML++;
+            sum++;
+        };
+    });
+    
+});

@@ -5,18 +5,16 @@ function incrementButton(arg){
         var element = document.getElementById(arg);
         var value = element.innerHTML;
         var button = document.getElementsByClassName('btn-success');
-        var quant = document.getElementsByClassName('qty-input');
-        var value2 = quant[0].innerHTML;
+        var quant = document.querySelectorAll('.qty-input');
 
-
-        console.log(value2);
-        console.log(element);
+        
+        // console.log(element);
         let sum = 1;
         for (let i = 0; i < quant.length; i++){
                 sum += parseInt(quant[i].innerHTML);
         };
 
-        console.log(sum);
+        // console.log(sum);
         
         
         if (sum>=4){
