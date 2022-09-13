@@ -6,7 +6,7 @@
 {% load static %}
 
 <script src="{% static '/js/jquery-3.6.1.min.js' %}"> </script>
-<script src="{% static '/js/incrementButtons.js' %}"> </script>
+
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -36,21 +36,18 @@
 
 
 <h2>Escolha seus acompanhamentos: </h2>
-{% comment %} <form action='' method="POST"> {% csrf_token %} {% endcomment %}
-<div class='d-flex-sm justify-content-center'>
-    <p></p>
-    
+<form action='' method="POST"> {% csrf_token %}
+<div class='container'>
+  <div class=' flex-sm-row '>
 
     {% for field in form %}
-    <div class='container flex-sm-row border'>
     {% for campo in field %}
     
-    <div class='row' style='text-align:center'>{{campo}}</div>
-    <button class=" btn btn-danger box-shadow float-end" onClick="decrementButton('acomp_qty_{{forloop.counter0}}')" style='border-radius:50%; items-align:right'> - </button>
-    <p class='inline-block qty-input float-center ' style='text-align:right' id='acomp_qty_{{forloop.counter0}}'>0</p>
-    <button class="btn btn-success box-shadow float-end" style='border-radius:50%' onClick="incrementButton('acomp_qty_{{forloop.counter0}}')"> + </button>
-    
-      
+    <div class='d-flex align-items-center justify-content-evenly' style='text-align:center'>{{campo}}
+      <button class="btn btn-danger box-shadow  decrement"  style='border-radius:50%;'> - </button>
+      <p class='inline-block qty-input float-center' style='text-align:right' id='acomp_qty_{{forloop.counter0}}'>0</p>
+      <button class="btn btn-success box-shadow increment float:right" style='border-radius:50%; item-align:right' > + </button>
+    </div>
 
       {%endfor%}  
       {%endfor%}
@@ -68,6 +65,6 @@
 
   </form>
 
-
+  <script src="{% static '/js/incrementButtons.js' %}"> </script>
 {% endblock %}
 

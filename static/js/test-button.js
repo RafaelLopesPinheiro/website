@@ -3,6 +3,7 @@ var decrements = document.querySelectorAll('.btn-decrement');
 var increments = document.querySelectorAll('.btn-increment');
 let counter = document.querySelectorAll(".numb");
 
+
 let sum = 0;
 for (let i = 0; i < counter.length; i++){
         sum += parseInt(counter[i].innerHTML);
@@ -25,7 +26,9 @@ decrements.forEach((decrement) => {
 increments.forEach((increment) => {
     increment.addEventListener("click",function(e){
         if(sum>=4){
-            increments.disabled = true;
+            for (let i=0; i < increments.length; i++){
+            increments[i].disabled = true;
+        }
         } else {
             e.preventDefault()
             e.target.previousElementSibling.innerHTML++;
