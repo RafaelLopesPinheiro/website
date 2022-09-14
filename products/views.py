@@ -64,8 +64,8 @@ def product_create_view(request, id):
         form = Book_form(request.POST)
         if form.is_valid() and form.cleaned_data:
             print(form.cleaned_data.get('acompanhamentos'))
-            Cart.objects.create(user=request.user, acomps=form.cleaned_data)
-            return render (request, "finish_order.html", context)
+            Cart.objects.create(user=request.user, acomps=form.cleaned_data, item=Quentinha.objects.get(id=id))
+            return render (request, "cart.html", context)
         else:
             print(form.errors)
             

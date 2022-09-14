@@ -43,7 +43,7 @@
     {% for field in form %}
     {% for campo in field %}
     
-    <div class='d-flex align-items-center justify-content-evenly' style='text-align:center'>{{campo}}
+    <div class='d-flex align-items-center' style='text-align:center'>{{campo}}
       <button class="btn btn-danger box-shadow  decrement"  style='border-radius:50%;'> - </button>
       <p class='inline-block qty-input float-center' style='text-align:right' id='acomp_qty_{{forloop.counter0}}'>0</p>
       <button class="btn btn-success box-shadow increment float:right" style='border-radius:50%; item-align:right' > + </button>

@@ -19,32 +19,40 @@
 
 <body>
 {%block content%}
-<div class='container'>
-    <div class='center'>
-        <a href="{% url 'products:feijoada-list'%}">
-            <button style="width:200px;height:150px;" class="btn-lg bg-green-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
-                Feijoadas
-            </button></a>
 
-        <a href="{% url 'products:quentinha-list'%}">
-            <button style="width:200px;height:150px;" class="btn-lg bg-blue-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                Quentinhas
-            </button></a>
+<div class='container'>
+    <div class='row '>
+        <div class='col text-right'>
+            <a href="{% url 'products:feijoada-list'%}">
+                <button style="width:200px;height:150px;" class="btn-lg bg-green-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ">
+                    Feijoadas
+                </button></a>
+        </div>
+
+        <div class='col text-left'>
+            <a href="{% url 'products:quentinha-list'%}">
+                <button style="width:200px;height:150px;" class="btn-lg bg-blue-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                    Quentinhas
+                </button></a>
+        </div>
     </div>
 </div>
 
 
 <div class='container'>
-    <div class='center'>
-        <a href="{%url 'products:bebidas' %}">
-            <button style="width:200px;height:150px;" class="btn-lg bg-red-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                Bebidas
-            </button></a>
-
-        <a href='#'>
-            <button style="width:200px;height:150px;" class="btn-lg bg-yellow-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-                Porções Extras
-            </button></a>
+    <div class='row '>
+        <div class='col text-right py-3'>
+            <a href="{% url 'products:bebidas' %}">
+                <button style="width:200px;height:150px;" class="btn-lg bg-red-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                    Bebidas
+                </button></a>
+            </div>
+            <div class='col text-left py-3'>
+            <a href='#'>
+                <button style="width:200px;height:150px;" class="btn-lg bg-yellow-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                    Porções Extras
+                </button></a>
+            </div>
     </div>
 </div>
 

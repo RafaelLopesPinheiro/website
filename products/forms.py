@@ -14,7 +14,7 @@ class Book_form(forms.Form):
 
     acompanhamentos = forms.ModelMultipleChoiceField(
                         queryset=Acompanhamentos.objects.all(),
-                        )
+                        widget=forms.CheckboxSelectMultiple,)
     
     # acompanhamentos = forms.ModelMultipleChoiceField(queryset=Acompanhamentos.objects.all(),)
     
