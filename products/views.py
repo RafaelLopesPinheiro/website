@@ -60,6 +60,7 @@ def product_create_view(request, id):
         'form': form,
         'object': object,
     }
+    
     if request.method == "POST":
         form = Book_form(request.POST)
         if form.is_valid() and form.cleaned_data:

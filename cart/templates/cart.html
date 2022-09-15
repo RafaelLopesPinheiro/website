@@ -2,12 +2,23 @@
 {% include 'topbar.html '%}
 
 {% block content %}
-<h1>CART VIEW </h1>
 <div class='container'>
-    {% comment %} {{object.user}} {% endcomment %}
+    <h1>Seus pedidos </h1>
+    {% comment %} <h1>{{request.user}}</h1> {% endcomment %}
     {% for instance in object_list %}
-    <h2>{{instance.user}}</h2>
+    {% if request.user.username in instance.user %}
+    {% comment %} {% if instance.user.date_created %} {% endcomment %}
+    <hr></hr>
+    <p>{{instance.date_created}}
+    <p>{{instance.user}}</p>
+    <p>{{instance.item}}</p>
+    <p>{{instance.acomps | slice:"31:-4" | cut:">" | cut:"<" | cut:"Acompanhamentos:" | cut:''}}</p>
+    {% comment %} {{instance.acomps | yesno:"Macarrão" }} {% endcomment %}
+    
+    {% comment %} <p>{{acomp}}</p> {% endcomment %}
 
+    {% comment %} {%endif%} {% endcomment %}
+    {%endif%}
     {%endfor%}
 </div>
 {% endblock %}

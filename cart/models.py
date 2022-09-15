@@ -7,7 +7,7 @@ class Cart(models.Model):
     user = models.CharField(max_length=50)
     item = models.CharField(max_length=100)
     acomps = models.CharField(max_length=100, null=True)
-    # date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
     
     def __str__(self):
         return self.user
