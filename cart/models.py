@@ -8,6 +8,7 @@ class Cart(models.Model):
     item = models.CharField(max_length=100)
     acomps = models.CharField(max_length=100, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+    observation = models.CharField(max_length=250, blank=True)
     
     def __str__(self):
         return self.user

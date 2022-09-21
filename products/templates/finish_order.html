@@ -5,20 +5,34 @@
 {% include 'navbar.html'%}
 {% load static %}
 
-<script src="{% static '/js/jquery-3.6.1.min.js' %}"> </script>
+  <script>
+    var tokenElement = '{% csrf_token %}';
+    let doc = new DOMParser().parseFromString(tokenElement, "text/html");
+    
+    let token = Array.from(doc.getElementsByTagName("input"));
+
+    {% comment %} console.log(token[0].value); {% endcomment %}
+
+    localStorage.setItem("CSRFToken", token.value);
+  </script>
 
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<link href="{% static '/js/style.css'%}" type="text/css">
 
-<style>
-  .box-shadow {
-    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2)
-}
-</style>
+
+  <script src="{% static '/js/jquery-3.6.1.min.js' %}"> </script>
+  <script src="{% static '/js/sendorder.js' %}" type="module" defer> </script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="{% static '/js/style.css'%}" type="text/css">
+
+  <style>
+    .box-shadow {
+      box-shadow: 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2)
+  }
+  </style>
 
 {% endblock head%}
 
@@ -34,36 +48,59 @@
 <!-- JS TEST AREA BELLOW  -->
 
 
-
+{% comment %} 
 <h2>Escolha seus acompanhamentos: </h2>
-<form action='' method="POST"> {% csrf_token %}
-<div class='container'>
-  <div class=' flex-sm-row '>
+<form action='' method="POST">
+   {% csrf_token %}
+  <div class='container'>
+    <div class=' flex-sm-row '>
+      {% for field in form %}
+      {% for campo in field %}
+      <hr></hr>
+          <div class='d-flex align-items-center' style='text-align:center'>{{campo}}
+            <button class="btn btn-danger box-shadow  decrement"  style='border-radius:50%;'> - </button>
+            <p class='inline-block qty-input float-center' style='text-align:right' id='acomp_qty_aa{{forloop.counter0}}'>0</p>
+            <button class="btn btn-success box-shadow increment float:right" style='border-radius:50%; item-align:right' > + </button>
+          </div>
 
-    {% for field in form %}
-    {% for campo in field %}
-    
-    <div class='d-flex align-items-center' style='text-align:center'>{{campo}}
-      <button class="btn btn-danger box-shadow  decrement"  style='border-radius:50%;'> - </button>
-      <p class='inline-block qty-input float-center' style='text-align:right' id='acomp_qty_{{forloop.counter0}}'>0</p>
-      <button class="btn btn-success box-shadow increment float:right" style='border-radius:50%; item-align:right' > + </button>
-    </div>
-
-      {%endfor%}  
+        {%endfor%}  
       {%endfor%}
+      
+      </div>
     </div>
-  </div>
-</div>
-<div><input class='flex-sm-row border' type='text' value='Observações' id='observacoes'></input>
+  </form> {% endcomment %}
+
+
+  {% comment %} <input class='flex-sm-row border' type='text' value='Observações' id='observacoes'></input> {% endcomment %}
   <input type='submit' value='Confirmar' class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" ></input>
   
 
 
+
+
+  {% comment %} <form method='POST'> {% endcomment %}
+     {% comment %} {% csrf_token %} {% endcomment %}
+  
+  <div id="acomp_form" class='cointainer'>
+    <div id="acomp_list" class='flex-sm-row'>
+      {% for item in object %}
+    
+        <div id='acomp_list_item_{{forloop.counter0}}' class='d-flex align-items-center' style='text-align:center'>
+          <p id='acomp_name_{{forloop.counter0}}'>{{item}}</p>
+          
+          <button class="btn btn-danger box-shadow  decrement"  style='border-radius:50%;'> - </button>
+          <p class='inline-block qty-input float-center' style='text-align:right' id='acomp_qty_{{forloop.counter0}}'>0</p>
+          <button class="btn btn-success box-shadow increment float:right" style='border-radius:50%; item-align:right' > + </button>
+        </div>
+
+      {% endfor %}
     </div>
     
-    </div>
+    <button id="sendOrderButton" type="button">Enviar</button>
+  </div>
+{% comment %} </form> {% endcomment %}
 
-  </form>
+
 
   <script src="{% static '/js/incrementButtons.js' %}"> </script>
 {% endblock %}

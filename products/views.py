@@ -1,12 +1,14 @@
 
+from distutils.command.clean import clean
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, FormView, CreateView, TemplateView
 from .models import Acompanhamentos, Quentinha, Extra, Bebida, Feijoada
 from .forms import Acompanha_Form, Book_form
 from django.utils.functional import LazyObject as _
-from cart.models import Cart
+from cart.models import Cart, Order
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 # Create your views here.
 
 
@@ -54,7 +56,6 @@ class BookView(FormView):
 @login_required
 def product_create_view(request, id):
     form = Book_form(request.POST or None)
-    successs_url = 'home.html'
     object = Quentinha.objects.get(id=id)
     context = {
         'form': form,
@@ -80,11 +81,38 @@ class BebidasView(ListView):
     queryset = Bebida.objects.all()
     print(queryset)
 
-# class BebidasDetailView(DetailView):
-#     template_name = 'bebidas_detail.html'
-#     queryset = Bebida.objects.get('id')    
-    
-#     def get_object(self):
-#         id_ = self.kwargs.get("id")
-#         return get_object_or_404(Bebida, id=id)
+
+
+from collections import defaultdict
+import json
+@csrf_exempt
+def product_create_view2(request, ): #id
+    form = Book_form(request.POST or None)
+    object = Acompanhamentos.objects.all()
+    context = {
+        'form': form,
+        'object': object,
+    }
+
+    if request.method == "POST":
+        # form = Book_form(request.POST)
+        # print('asdwaswa')
+        # if form.is_valid() and form.cleaned_data:
+        #     print(form.cleaned_data.get('acompanhamentos'))
+        #     Cart.objects.create(user=request.user, acomps=form.cleaned_data,
+        #                         )# item=Quentinha.objects.get(id=id))
+        #     return render (request, "cart.html", context)
+        # else:
+        #     print(form.errors)
+        
+        received_json = json.loads(request.body)
+        clean_data = []
+        if received_json:
+            for j in received_json:
+                if j['amount'] != 0:
+                    clean_data.append(j)
+        print(clean_data)
+            
+            
+    return render (request, "finish_order.html", context)
 
