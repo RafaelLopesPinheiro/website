@@ -109,7 +109,7 @@ def product_create_view2(request, ): #id
         clean_data = []
         if received_json:
             for j in received_json:
-                if j['amount'] != 0:
+                if j['amount'] != '0':
                     clean_data.append(j)
         print(clean_data)
             
