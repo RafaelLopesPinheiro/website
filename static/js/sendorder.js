@@ -16,11 +16,11 @@ class sendOrder {
 
             acomps.push(acomp)
         }
-        const datas = {...acomps}
-        console.log(acomps)
-        const response = await Api.sendOrder(datas);
 
-        console.log(response)
+        
+        const response = await Api.sendOrder(acomps);
+
+        // console.log(response)
     }
 }
 
