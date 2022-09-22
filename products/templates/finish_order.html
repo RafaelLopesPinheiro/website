@@ -49,7 +49,6 @@
 
 
 {% comment %} 
-<h2>Escolha seus acompanhamentos: </h2>
 <form action='' method="POST">
    {% csrf_token %}
   <div class='container'>
@@ -72,7 +71,7 @@
 
 
   {% comment %} <input class='flex-sm-row border' type='text' value='Observações' id='observacoes'></input> {% endcomment %}
-  <input type='submit' value='Confirmar' class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" ></input>
+  {% comment %} <input type='submit' value='Confirmar' class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" ></input> {% endcomment %}
   
 
 
@@ -81,10 +80,12 @@
   {% comment %} <form method='POST'> {% endcomment %}
      {% comment %} {% csrf_token %} {% endcomment %}
   
+  <h2>Escolha seus acompanhamentos: </h2>
+
   <div id="acomp_form" class='cointainer'>
     <div id="acomp_list" class='flex-sm-row'>
       {% for item in object %}
-    
+        <hr></hr>
         <div id='acomp_list_item_{{forloop.counter0}}' class='d-flex align-items-center' style='text-align:center'>
           <p id='acomp_name_{{forloop.counter0}}'>{{item}}</p>
           
@@ -96,7 +97,7 @@
       {% endfor %}
     </div>
     
-    <button id="sendOrderButton" type="button">Enviar</button>
+    <button id="sendOrderButton" type="button" class='bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Confirmar</button>
   </div>
 {% comment %} </form> {% endcomment %}
 
