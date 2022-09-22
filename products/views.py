@@ -87,31 +87,23 @@ from collections import defaultdict
 import json
 @csrf_exempt
 def product_create_view2(request, ): #id
-    form = Book_form(request.POST or None)
     object = Acompanhamentos.objects.all()
     context = {
-        'form': form,
         'object': object,
     }
 
     if request.method == "POST":
-        # form = Book_form(request.POST)
-        # print('asdwaswa')
-        # if form.is_valid() and form.cleaned_data:
-        #     print(form.cleaned_data.get('acompanhamentos'))
-        #     Cart.objects.create(user=request.user, acomps=form.cleaned_data,
-        #                         )# item=Quentinha.objects.get(id=id))
-        #     return render (request, "cart.html", context)
-        # else:
-        #     print(form.errors)
-        
         received_json = json.loads(request.body)
         clean_data = []
         if received_json:
             for j in received_json:
                 if j['amount'] != '0':
                     clean_data.append(j)
+        # dict(clean_data)
         print(clean_data)
+        context['item_1'] = clean_data
+        
+        return render (request, 'cart.html', context)    
             
             
     return render (request, "finish_order.html", context)

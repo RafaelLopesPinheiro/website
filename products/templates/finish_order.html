@@ -1,6 +1,5 @@
 {% extends 'home.html'%}
 
-
 {% block head %}
 {% include 'navbar.html'%}
 {% load static %}
@@ -8,15 +7,9 @@
   <script>
     var tokenElement = '{% csrf_token %}';
     let doc = new DOMParser().parseFromString(tokenElement, "text/html");
-    
     let token = Array.from(doc.getElementsByTagName("input"));
-
-    {% comment %} console.log(token[0].value); {% endcomment %}
-
     localStorage.setItem("CSRFToken", token.value);
   </script>
-
-
 
 
   <script src="{% static '/js/jquery-3.6.1.min.js' %}"> </script>
@@ -37,67 +30,25 @@
 {% endblock head%}
 
 
-
-
 {% block content %}
-{% comment %} {% include 'navbar.html'%} {% endcomment %}
 
-
-
-
-<!-- JS TEST AREA BELLOW  -->
-
-
-{% comment %} 
-<form action='' method="POST">
-   {% csrf_token %}
-  <div class='container'>
-    <div class=' flex-sm-row '>
-      {% for field in form %}
-      {% for campo in field %}
-      <hr></hr>
-          <div class='d-flex align-items-center' style='text-align:center'>{{campo}}
-            <button class="btn btn-danger box-shadow  decrement"  style='border-radius:50%;'> - </button>
-            <p class='inline-block qty-input float-center' style='text-align:right' id='acomp_qty_aa{{forloop.counter0}}'>0</p>
-            <button class="btn btn-success box-shadow increment float:right" style='border-radius:50%; item-align:right' > + </button>
-          </div>
-
-        {%endfor%}  
-      {%endfor%}
-      
-      </div>
-    </div>
-  </form> {% endcomment %}
-
-
-  {% comment %} <input class='flex-sm-row border' type='text' value='Observações' id='observacoes'></input> {% endcomment %}
-  {% comment %} <input type='submit' value='Confirmar' class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" ></input> {% endcomment %}
-  
-
-
-
-
-  {% comment %} <form method='POST'> {% endcomment %}
-     {% comment %} {% csrf_token %} {% endcomment %}
-  
-  <h2>Escolha seus acompanhamentos: </h2>
-
-  <div id="acomp_form" class='cointainer'>
-    <div id="acomp_list" class='flex-sm-row'>
+  <h4 class='px-3'>Escolha seus acompanhamentos: </h4>
+  <div id="acomp_form" class='card'>
+    <div id="acomp_list" class='list-group list-group-flush '>
       {% for item in object %}
-        <hr></hr>
-        <div id='acomp_list_item_{{forloop.counter0}}' class='d-flex align-items-center' style='text-align:center'>
-          <p id='acomp_name_{{forloop.counter0}}'>{{item}}</p>
+        <div id='acomp_list_item_{{forloop.counter0}}' class='d-flex justify-content-end border-bottom mb-2 mt-2 px-8' style='text-align:center'>
+          <h3><p id='acomp_name_{{forloop.counter0}}' class='align-self-center'>{{item}}</p></h3>
           
-          <button class="btn btn-danger box-shadow  decrement"  style='border-radius:50%;'> - </button>
-          <p class='inline-block qty-input float-center' style='text-align:right' id='acomp_qty_{{forloop.counter0}}'>0</p>
-          <button class="btn btn-success box-shadow increment float:right" style='border-radius:50%; item-align:right' > + </button>
+          <button class="btn btn-danger box-shadow decrement mb-2 ml-2"  style='border-radius:50%;'> - </button>
+          <p class='inline-block qty-input float-center align-self-center' style='text-align:right' id='acomp_qty_{{forloop.counter0}}' >0</p>
+          <button class="btn btn-success box-shadow increment mb-2 " style='border-radius:50%; ' > + </button>
+          <hr class='mb-2 mt-2'></hr>
         </div>
-
+      
       {% endfor %}
     </div>
     
-    <button id="sendOrderButton" type="button" class='bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Confirmar</button>
+    <button id="sendOrderButton" action="{% url 'cart:cart'%}" type="submit" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Confirmar</button>
   </div>
 {% comment %} </form> {% endcomment %}
 

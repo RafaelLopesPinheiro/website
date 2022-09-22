@@ -3,7 +3,6 @@
 var decrements = document.querySelectorAll('.decrement');
 var increments = document.querySelectorAll('.increment');
 let counter = document.querySelectorAll(".qty-input");
-let value = counter.innerHTML;
 
 
 let sum = 0;
@@ -15,7 +14,7 @@ for (let i = 0; i < counter.length; i++){
 
 decrements.forEach((decrement) => {
     decrement.addEventListener("click",function(e){
-        if(sum > 0){
+        if(sum >= 0){
             e.preventDefault();
             e.target.nextElementSibling.innerHTML--;
             sum--;
@@ -26,6 +25,7 @@ decrements.forEach((decrement) => {
         } else {
             e.target.nextElementSibling.innerHTML;
             e.preventDefault();
+            
         };
     });
 });
@@ -33,16 +33,19 @@ decrements.forEach((decrement) => {
 
 increments.forEach((increment) => {
     increment.addEventListener("click",function(e){
-        if(sum>=4){
-                e.preventDefault()
-                e.target.previousElementSibling.innerHTML;
-                for (let i=0; i < increments.length; i++){
-                        increments[i].disabled = true;
-                }
-        } else {
-            e.preventDefault()
+        if(sum>=3){
             sum++;
             e.target.previousElementSibling.innerHTML++;
+
+            for (let i=0; i < increments.length; i++){
+                increments[i].disabled = true;
+            }
+            // e.preventDefault()
+            console.log(sum)
+        } else {
+            // e.preventDefault()
+            e.target.previousElementSibling.innerHTML++;
+            sum++;
             console.log(sum)
         };
     });
