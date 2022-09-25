@@ -14,7 +14,6 @@ class Quentinha(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=150)
     price = models.FloatField(null=True)
-    acompanhamentos = models.ManyToManyField(Acompanhamentos)
     thumb = models.ImageField(blank=True)
 
     def get_absolute_url(self):

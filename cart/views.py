@@ -12,7 +12,8 @@ def cart_view(request, *args, **kwargs):
 
 class CartView(LoginRequiredMixin, ListView):
     template_name="cart.html"
-    queryset = Cart.objects.all()
+    carts = Cart.objects.all()
+    queryset = carts.order_by('-date_created')
     
     # def get(self, request):
     #     queryset = Cart.objects.filter(user=request.user)

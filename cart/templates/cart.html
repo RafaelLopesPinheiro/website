@@ -12,8 +12,10 @@
     
             <p>{{instance.user}}</p>
             <p>{{instance.item }}</p>
-            <p>{{instance.acomps | slice:"31:-4" | cut:">" | cut:"<" | cut:"Acompanhamentos:" | cut:''}}</p>
-            <p>{{instance.date_created}}
+            <p>{{instance.acomps | cut:"'amount':"|cut:"'"|cut:"name:"|cut:"[{"|cut:"}]"|cut:"{"|cut:"}"}}</p>
+            <p>{{instance.date_created }}
+
+            {% comment %} <p>{{instance.acomps | slice:"31:-4" | cut:">" | cut:"<" | cut:"Acompanhamentos:" | cut:''}}</p> {% endcomment %}
     </div>
     </div>
 

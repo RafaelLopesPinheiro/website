@@ -66,7 +66,7 @@ def product_create_view(request, id):
         form = Book_form(request.POST)
         if form.is_valid() and form.cleaned_data:
             print(form.cleaned_data.get('acompanhamentos'))
-            Cart.objects.create(user=request.user, acomps=form.cleaned_data, item=Quentinha.objects.get(id=id))
+            Order.objects.create(user=request.user, acomps=form.cleaned_data, item=Quentinha.objects.get(id=id))
             return render (request, "cart.html", context)
         else:
             print(form.errors)
@@ -83,7 +83,6 @@ class BebidasView(ListView):
 
 
 
-from collections import defaultdict
 import json
 @csrf_exempt
 def product_create_view2(request, ): #id
@@ -94,14 +93,24 @@ def product_create_view2(request, ): #id
 
     if request.method == "POST":
         received_json = json.loads(request.body)
-        clean_data = []
-        if received_json:
-            for j in received_json:
-                if j['amount'] != '0':
-                    clean_data.append(j)
-        # dict(clean_data)
-        print(clean_data)
-        context['item_1'] = clean_data
+        clean_order = [j for j in received_json if j['amount'] != '0']
+        # clean_order = [dict([a, int(x)] for a, x in b.items() if a == 'amount') for b in clean_order]
+        
+        for sub in clean_order:
+            for key in sub:
+                if key == 'amount':
+                    sub[key] = int(sub[key])
+
+                    
+        print('-='*20)
+        for i,j in enumerate(clean_order):
+            
+            print(i)
+            print(j)
+            print(Order.objects.filter(user=request.user))
+            
+        Order.objects.create(user=request.user, acomps_1=clean_order[0], acomps_2=clean_order[1],
+                            acomps_3=clean_order[2], acomps_4=clean_order[3])
         
         return render (request, 'cart.html', context)    
             

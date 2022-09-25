@@ -10,8 +10,8 @@ class sendOrder {
 
         for(let i = 0; i < acompQty; i++) {
             let acomp = {
-                name: document.getElementById("acomp_name_" + i).innerHTML,
-                amount: document.getElementById("acomp_qty_" + i).innerHTML
+                amount: document.getElementById("acomp_qty_" + i).innerHTML,
+                name: document.getElementById("acomp_name_" + i).innerHTML
             }
 
             acomps.push(acomp)
