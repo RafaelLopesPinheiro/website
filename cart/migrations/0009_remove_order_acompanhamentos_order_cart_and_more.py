@@ -11,12 +11,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='order',
-            name='acompanhamentos',
-        ),
         migrations.AddField(
-            model_name='order',
+            model_name='cart',
             name='cart',
             field=models.ForeignKey(default=True, on_delete=django.db.models.deletion.DO_NOTHING, to='cart.cart'),
             preserve_default=False,

@@ -66,7 +66,8 @@ def product_create_view(request, id):
         form = Book_form(request.POST)
         if form.is_valid() and form.cleaned_data:
             print(form.cleaned_data.get('acompanhamentos'))
-            Order.objects.create(user=request.user, acomps=form.cleaned_data, item=Quentinha.objects.get(id=id))
+            Order.objects.create(user=request.user, acomps=form.cleaned_data,
+                                 acomps_1=form.cleaned_data, item=Quentinha.objects.get(id=id))
             return render (request, "cart.html", context)
         else:
             print(form.errors)
@@ -95,22 +96,40 @@ def product_create_view2(request, ): #id
         received_json = json.loads(request.body)
         clean_order = [j for j in received_json if j['amount'] != '0']
         # clean_order = [dict([a, int(x)] for a, x in b.items() if a == 'amount') for b in clean_order]
-        
-        for sub in clean_order:
-            for key in sub:
-                if key == 'amount':
-                    sub[key] = int(sub[key])
-
-                    
+                            
+                            
+        acomps_1 = clean_order[0]               
+        acomps_2 = clean_order[1]               
+        acomps_3 = clean_order[2]               
+        acomps_4 = clean_order[3]               
+                            
+               
+                            
         print('-='*20)
         for i,j in enumerate(clean_order):
-            
             print(i)
             print(j)
-            print(Order.objects.filter(user=request.user))
             
-        Order.objects.create(user=request.user, acomps_1=clean_order[0], acomps_2=clean_order[1],
-                            acomps_3=clean_order[2], acomps_4=clean_order[3])
+            # Order.objects.create(user=request.user, acomps_1=clean_order[j])
+            # print(Order.objects.filter(user=request.user))
+        
+        
+        
+        if len(clean_order) > 1:
+            try:
+                Order.objects.create(user=request.user, acomps_1=acomps_1, acomps_2=acomps_2,
+                                    )#acomps_3=clean_order[2], acomps_4=clean_order[3])
+                Order.objects.update(user=request.user, acomps_1=acomps_1, acomps_2=acomps_2, acomps_3=clean_order[2])
+                Order.objects.update(user=request.user, acomps_4=clean_order[3])
+            except IndexError:
+                pass  
+                
+                
+                 
+        # Order.objects.create(user=request.user, acomps_1=clean_order[0], acomps_2=clean_order[1],
+        #                     acomps_3=clean_order[2], acomps_4=clean_order[3])
+        
+        # Order.objects.update(acomps_2='testando')
         
         return render (request, 'cart.html', context)    
             

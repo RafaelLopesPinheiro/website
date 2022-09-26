@@ -33,5 +33,4 @@ class Cart(models.Model):
     product = models.ForeignKey(Quentinha, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=150, null=True, choices=STATUS)
-    # acompanhamentos = models.ManyToManyField(Acompanhamentos)
-
+    
