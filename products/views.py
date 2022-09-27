@@ -83,7 +83,7 @@ class BebidasView(ListView):
     print(queryset)
 
 
-
+from django.conf import settings
 import json
 @csrf_exempt
 def product_create_view2(request, ): #id
@@ -96,40 +96,48 @@ def product_create_view2(request, ): #id
         received_json = json.loads(request.body)
         clean_order = [j for j in received_json if j['amount'] != '0']
         # clean_order = [dict([a, int(x)] for a, x in b.items() if a == 'amount') for b in clean_order]
-                            
-                            
-        acomps_1 = clean_order[0]               
-        acomps_2 = clean_order[1]               
-        acomps_3 = clean_order[2]               
-        acomps_4 = clean_order[3]               
-                            
-               
-                            
+                                 
         print('-='*20)
         for i,j in enumerate(clean_order):
-            print(i)
             print(j)
-            
-            # Order.objects.create(user=request.user, acomps_1=clean_order[j])
-            # print(Order.objects.filter(user=request.user))
+
+
+        ## CREATE CART AND ADD FIRST ITEMS SELECTED ## 
+        teste = Cart.objects.get(id=request.user.id)
+        teste.items.set([56,57])
+        print(Cart.objects.filter(id=request.user.id))
         
         
         
-        if len(clean_order) > 1:
-            try:
-                Order.objects.create(user=request.user, acomps_1=acomps_1, acomps_2=acomps_2,
-                                    )#acomps_3=clean_order[2], acomps_4=clean_order[3])
-                Order.objects.update(user=request.user, acomps_1=acomps_1, acomps_2=acomps_2, acomps_3=clean_order[2])
-                Order.objects.update(user=request.user, acomps_4=clean_order[3])
-            except IndexError:
-                pass  
+        
+        
+        ## NEED TO CREATE CART OBJECT FIRST THEN ADD ORDER TO THE CART ##
+        
+        # if len(clean_order) > 0:
+        #     try:
+        #         # GET OBJECT WITH THE SETTINGS PASSED or CREATE ONE 
+        #         Order.objects.filter(id=request.user.id).get_or_create(user=request.user,
+        #                                                                     acomps_1=clean_order[0])
                 
+        #         # Order.objects.update(user=request.user.id, acomps_1=clean_order[0], acomps_2=clean_order[1],
+        #                             # acomps_3=clean_order[2], acomps_4=clean_order[3])
+        #     except IndexError:
+        #         pass
+            # try:
+            #     Order.objects.update_or_create(user=request.user.id, acomps_1=clean_order[0], acomps_2=clean_order[1], acomps_3=clean_order[2])
+            # except IndexError:
+            #     pass
+            # try:
+            #     Order.objects.update_or_create(user=request.user, acomps_1=clean_order[0], acomps_2=clean_order[1])
+            # except IndexError:
+            #     pass  
+            # try:
+            #     Order.objects.update_or_create(user=request.user, acomps_1=clean_order[0],)
+            # except IndexError:
+            #     pass    
                 
-                 
-        # Order.objects.create(user=request.user, acomps_1=clean_order[0], acomps_2=clean_order[1],
-        #                     acomps_3=clean_order[2], acomps_4=clean_order[3])
         
-        # Order.objects.update(acomps_2='testando')
+        
         
         return render (request, 'cart.html', context)    
             

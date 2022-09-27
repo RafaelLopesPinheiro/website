@@ -5,6 +5,7 @@ from products.models import Acompanhamentos, Quentinha
 class Order(models.Model):
     ## add user here 
     user = models.CharField(max_length=50)
+    qnty = models.IntegerField(default=1)
     item = models.CharField(max_length=100)
     acomps = models.CharField(max_length=200, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
@@ -23,14 +24,15 @@ class Order(models.Model):
 
 class Cart(models.Model):
     STATUS = (
-        ('Pending', 'Pending'),
+        ('Not Confirmed', 'Not Confirmed'),
+        ('Confirmed', 'Confirmed'),
         ('Out for delivery', 'Out for delivery'),
         ('Delivered', 'Delivered'),
     )
 
     # customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
-    cart = models.ForeignKey(Order, on_delete=models.DO_NOTHING)
+    items = models.ManyToManyField(Order, related_name='item_orders')
     product = models.ForeignKey(Quentinha, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
-    status = models.CharField(max_length=150, null=True, choices=STATUS)
+    status = models.CharField(max_length=150, null=True, choices=STATUS, default='Not Confirmed')
     
