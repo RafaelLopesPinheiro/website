@@ -14,40 +14,40 @@ for (let i = 0; i < counter.length; i++){
 
 decrements.forEach((decrement) => {
     decrement.addEventListener("click",function(e){
-        if(sum >= 0){
-            e.preventDefault();
+        if(sum > 0 && e.target.nextElementSibling.innerHTML > 0){
             e.target.nextElementSibling.innerHTML--;
             sum--;
-            for (let i=0; i < increments.length; i++){
-            increments[i].disabled = false;
+            
+            for (let i = 0; i < increments.length; i++){
+                increments[i].disabled = false;
+            }
+            if (sum == 0){
+                for (let i = 0; i < decrements.length; i++){
+                    decrements[i].disabled = true;
+                }    
             }
             console.log(sum)
-        } else {
-            e.target.nextElementSibling.innerHTML;
-            e.preventDefault();
-            
-        };
+        } 
     });
 });
 
 
 increments.forEach((increment) => {
     increment.addEventListener("click",function(e){
-        if(sum>=3){
+        if(sum < 4){
             sum++;
             e.target.previousElementSibling.innerHTML++;
-
-            for (let i=0; i < increments.length; i++){
-                increments[i].disabled = true;
+            for (let i = 0; i < decrements.length; i++){
+                decrements[i].disabled = false;
             }
-            // e.preventDefault()
+            if (sum == 4){
+                for (let i=0; i < increments.length; i++){
+                    increments[i].disabled = true;
+                }
+            }
+
             console.log(sum)
-        } else {
-            // e.preventDefault()
-            e.target.previousElementSibling.innerHTML++;
-            sum++;
-            console.log(sum)
-        };
+        } 
     });
     
 });

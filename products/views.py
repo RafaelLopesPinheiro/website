@@ -98,46 +98,26 @@ def product_create_view2(request, ): #id
         # clean_order = [dict([a, int(x)] for a, x in b.items() if a == 'amount') for b in clean_order]
                                  
         print('-='*20)
-        for i,j in enumerate(clean_order):
-            print(j)
 
+        # Cart.objects.get_or_create(id=request.user.id)  
+        # print(Order.objects.filter(id=request.user.id))
+        
+        Order.objects.create(user=request.user.id, acomps_1=clean_order[0])
+        for i,j in enumerate(clean_order):    
+            if(i == 1):
+                Order.objects.update(user=request.user.id, acomps_2 = j)
+            elif(i == 2):
+                Order.objects.update(user=request.user.id, acomps_3 = j)
+            elif(i == 3):
+                Order.objects.update(user=request.user.id, acomps_4 = j)
+        print('-='*20)
 
         ## CREATE CART AND ADD FIRST ITEMS SELECTED ## 
-        teste = Cart.objects.get(id=request.user.id)
-        teste.items.set([56,57])
-        print(Cart.objects.filter(id=request.user.id))
-        
-        
-        
-        
-        
+        # teste = Cart.objects.get(id=request.user.id)
+        # teste.items.set([56,57])
+        # print(Cart.objects.filter(id=request.user.id))
+
         ## NEED TO CREATE CART OBJECT FIRST THEN ADD ORDER TO THE CART ##
-        
-        # if len(clean_order) > 0:
-        #     try:
-        #         # GET OBJECT WITH THE SETTINGS PASSED or CREATE ONE 
-        #         Order.objects.filter(id=request.user.id).get_or_create(user=request.user,
-        #                                                                     acomps_1=clean_order[0])
-                
-        #         # Order.objects.update(user=request.user.id, acomps_1=clean_order[0], acomps_2=clean_order[1],
-        #                             # acomps_3=clean_order[2], acomps_4=clean_order[3])
-        #     except IndexError:
-        #         pass
-            # try:
-            #     Order.objects.update_or_create(user=request.user.id, acomps_1=clean_order[0], acomps_2=clean_order[1], acomps_3=clean_order[2])
-            # except IndexError:
-            #     pass
-            # try:
-            #     Order.objects.update_or_create(user=request.user, acomps_1=clean_order[0], acomps_2=clean_order[1])
-            # except IndexError:
-            #     pass  
-            # try:
-            #     Order.objects.update_or_create(user=request.user, acomps_1=clean_order[0],)
-            # except IndexError:
-            #     pass    
-                
-        
-        
         
         return render (request, 'cart.html', context)    
             
