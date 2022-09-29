@@ -6,11 +6,10 @@ export class Api {
         "X-CSRFToken": localStorage.getItem("CSRFToken"),
         
     };
-
     
-    // ADD ITEM ID ON FINISH ORDER API BELLOW
+
     static async sendOrder(data) {
-        const url = this.baseUrl + "finish_order/7";
+        const url = this.baseUrl + "quentinhas/" + window.location.href.split('/')[4];
         // var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
         // console.log(csrftoken)
         const requestData = {

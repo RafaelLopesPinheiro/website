@@ -2,45 +2,59 @@
 
 {% block head %}
 {% include 'navbar.html'%}
-{% endblock %}
+{% load static %}
+
+  <script>
+    var tokenElement = '{% csrf_token %}';
+    let doc = new DOMParser().parseFromString(tokenElement, "text/html");
+    let token = Array.from(doc.getElementsByTagName("input"));
+    localStorage.setItem("CSRFToken", token.value);
+  </script>
 
 
+  <script src="{% static '/js/sendorder.js' %}" type="module" defer> </script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="{% static '/js/style.css'%}" type="text/css">
+
+  <style>
+    .box-shadow {
+      box-shadow: 0 16px 24px 2px rgba(0, 0, 0, .14), 0 6px 30px 5px rgba(0, 0, 0, .12), 0 8px 10px -5px rgba(0, 0, 0, .2)
+  }
+  </style>
+
+{% endblock head%}
 
 
 {% block content %}
-
-
-<p style="text-align: center";> {{ object.description }}</p>
-<h4><p style="text-align: center";>Valor: R${{ object.price|floatformat:2 }}</h4></p>
-  <table class="table table-bordered" style="text-align: center";>
-    <thead>
-      <tr>
-        <h3 style="text-align: center";> Acompanhamentos </h3>
-      </tr>
-      <div class="container">
-        <form action="" method="POST"> {% csrf_token %}
+{% comment %} <form method='POST'> {%csrf_token%} {% endcomment %}
+  {% comment %} <h3 class='text-center'>{{item}}</h3> {% endcomment %}
+  <h4 class='px-3'>Escolha seus acompanhamentos: </h4>
+  <div id="acomp_form" class='card'>
+    <div id="acomp_list" class='list-group list-group-flush '>
+      {% for item in object %}
+        <div id='acomp_list_item_{{forloop.counter0}}' class='d-flex justify-content-end border-bottom mb-2 mt-2 px-8' style='text-align:center'>
+          <h4><p id='acomp_name_{{forloop.counter0}}' class='align-self-center'>{{item}}</p></h4>
           
-          <table class='table table-bordered'>
-            <tbody>
-          {% for field in form %}
+          <button class="btn btn-danger box-shadow decrement mb-2 ml-2"  style='border-radius:50%;' disabled> - </button>
+          <p class='inline-block qty-input float-center align-self-center' style='text-align:right' id='acomp_qty_{{forloop.counter0}}' >0</p>
+          <button class="btn btn-success box-shadow increment mb-2 " style='border-radius:50%; ' > + </button>
+          <hr class='mb-2 mt-2'></hr>
+        </div>
+      
+      {% endfor %}
+    </div>
+    <input type='text' placeholder ='observações'></input>
+    <h5 style="text-align: right">Valor: R${{ item.price|floatformat:2 }}</h5>
 
-          <td>
+    <button id="sendOrderButton" type="button" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Confirmar</button>
+  </div>
+  {% comment %} ADD ON BUTTON ABOVE TO SAVE ITEMS ON BACKEND {% endcomment %}
+{% comment %} onclick="location.href={% url 'cart:cart'%}" {% endcomment %}
 
-              <td>
-                <input><p style='text-align:center';> {{ field }} </p></input>
-              </td>
 
-          </td>
-          
-          
-          {% endfor %}
-          </tbody>  
-          </table>
-          <input type='submit' value='Confirmar' class="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" ></input>
-        </form>        
-      </div>
-    </thead>
-  
-  </table>
-
+  <script src="{% static '/js/incrementButtons.js' %}"> </script>
 {% endblock %}
+

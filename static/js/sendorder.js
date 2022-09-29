@@ -33,5 +33,5 @@ function loadSendButtonEvent() {
         sendOrder.sendOrderData()
     })
 }
-
+console.log(window.location.href.split('/')[4])
 loadSendButtonEvent()
