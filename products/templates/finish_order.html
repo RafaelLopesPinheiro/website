@@ -33,6 +33,7 @@
 {% block content %}
 {% comment %} <form method='POST'> {%csrf_token%} {% endcomment %}
   <h4 class='px-3'>Escolha seus acompanhamentos: </h4>
+  <h3 class='text-center'>{{item}}</h3>
   <div id="acomp_form" class='card'>
     <div id="acomp_list" class='list-group list-group-flush '>
       {% for item in object %}

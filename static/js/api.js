@@ -7,8 +7,10 @@ export class Api {
         
     };
 
+    
+    // ADD ITEM ID ON FINISH ORDER API BELLOW
     static async sendOrder(data) {
-        const url = this.baseUrl + "finish_order/";
+        const url = this.baseUrl + "finish_order/7";
         // var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
         // console.log(csrftoken)
         const requestData = {

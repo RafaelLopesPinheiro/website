@@ -4,16 +4,18 @@
 {% block content %}
 <div class='container'>
     <h1>Seus pedidos </h1>
+    <p>{{object_list}}
 
     {% for instance in object_list %}
     {% if request.user.username in instance.user %}
     <div class='row justify-content-center'>
         <div class='card text-left'> 
-    
-            <p>{{instance.user}}</p>
+            <div class='card-head'>Pedido:</div>
+            {% comment %} <p>{{instance.user}}</p> {% endcomment %}
+            
             <p>{{instance.item }}</p>
             <p>{{instance.acomps | cut:"'amount':"|cut:"'"|cut:"name:"|cut:"[{"|cut:"}]"|cut:"{"|cut:"}"}}</p>
-            <p>{{instance.date_created }}
+            <p>{{instance.date_created }} 
 
             {% comment %} <p>{{instance.acomps | slice:"31:-4" | cut:">" | cut:"<" | cut:"Acompanhamentos:" | cut:''}}</p> {% endcomment %}
     </div>
