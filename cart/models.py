@@ -1,10 +1,11 @@
+from pyexpat import model
 from django.db import models
 from products.models import Acompanhamentos, Quentinha
 
 # Create your models here.
 class Order(models.Model):
     ## add user here 
-    user = models.CharField(max_length=50)
+    user = models.CharField(max_length=50, blank=True)
     qnty = models.IntegerField(default=1)
     item = models.CharField(max_length=100)
     acomps = models.CharField(max_length=200, blank=True)
@@ -31,6 +32,7 @@ class Cart(models.Model):
     )
 
     # customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
+    user = models.CharField(max_length=150, null=True)
     items = models.ManyToManyField(Order, related_name='item_orders')
     product = models.ForeignKey(Quentinha, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
