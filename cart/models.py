@@ -38,3 +38,10 @@ class Cart(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=150, null=True, choices=STATUS, default='Not Confirmed')
     
+
+class Customer(models.Model):
+    name = models.CharField(max_length=100, null=True)
+    address = models.CharField(max_length=250, null=True)
+    device = models.CharField(max_length=50, null=True)
+    phone = models.CharField(max_length=25, null=True)
+    

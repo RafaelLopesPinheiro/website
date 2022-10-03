@@ -7,7 +7,7 @@ from django.views.generic import DetailView, ListView, FormView, CreateView, Tem
 from .models import Acompanhamentos, Quentinha, Extra, Bebida, Feijoada
 from .forms import Acompanha_Form, Book_form
 from django.utils.functional import LazyObject as _
-from cart.models import Cart, Order
+from cart.models import Cart, Order, Customer
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 import datetime as dt
@@ -75,15 +75,14 @@ class BebidasView(ListView):
 #             return render (request, "cart.html", context)
 #         else:
 #             print(form.errors)
-            
-            
+
 #     return render (request, "product_detail.html", context)
 
 
 
-# from django.contrib.sessions.backends.db import SessionStore
+
  ## FINISH_ORDER ## 
-from django.contrib.sessions.models import Session
+from django.contrib.auth.base_user import AbstractBaseUser
 import json
 @csrf_exempt
 def product_create_view(request, id): #id
@@ -94,62 +93,76 @@ def product_create_view(request, id): #id
         'item': item_id,
     }
 
-    customer_ip = request.META['REMOTE_ADDR']
-    print(customer_ip)
     print('---'*15)
-    
+    # print(request.user.customer)
     if request.method == "POST":
         received_json = json.loads(request.body)
         clean_order = [j for j in received_json if j['amount'] != '0']          
                         
-    
+        device = request.COOKIES['device']
         ## THIS ONE ONLY WORK WITH GET TO UPDATE ITEMS ON CART 
-        # customer_cart = Cart.objects.get_or_create(id=request.user.id)
+
+        try: 
+            new_order = Order.objects.create(user=request.user.id, item=item_id)
+
+        except:
+            pass
+            # device = request.COOKIES['device']
+            # customer, created = Customer.objects.get_or_create(device=device)
+            
         # customer_cart.items.set([105]) 
-        
-        
+        new_order = Order.objects.create(user=device, item=item_id, acomps_1=clean_order[0])
+
         ## THIS ONLY WORK WITH FILTER 
         # Cart.objects.filter(id=request.user.id).update(status='Confirmed') 
        
-        new_order = Order.objects.create(user=request.session.session_key, item=item_id, acomps_1=clean_order[0])
+       
+        # new_order, created = Order.objects.get_or_create(user=request.user.id, item=item_id, acomps_1=clean_order[0])
         for i,j in enumerate(clean_order):    
             if(i == 1):
-                new_order = Order.objects.filter(user=request.session.session_key, item=item_id).update(acomps_2 = j)
+                Order.objects.filter(user=device, item=item_id).update(acomps_2 = j)
             elif(i == 2):
-                new_order = Order.objects.filter(user=request.session.session_key, item=item_id).update(acomps_3 = j)
+                Order.objects.filter(user=device, item=item_id).update(acomps_3 = j)
             elif(i == 3):
-                new_order = Order.objects.filter(user=request.session.session_key, item=item_id).update(acomps_4 = j)
+                Order.objects.filter(user=device, item=item_id).update(acomps_4 = j)
         print('-='*20)
+        
         print(new_order.id)
         
-        ## CREATE CART AND ADD FIRST ITEMS SELECTED ## 
-        try:
-            customer_cart = Cart.objects.get(user=request.session.session_key)
-        except:
-            customer_cart = Cart.objects.create(user=request.session.session_key)
+        new_order.acomps_1 = clean_order[3]
+        
+        
+        ## CREATE CART AND ADD FIRST ITEMS SELECTED ##  WORKING ! 
+        # try:
+        #     customer = request.user.id
+        #     customer_cart, created = Cart.objects.get_or_create(user=customer)
+        #     customer_cart.items.set([new_order.id])
+        # except:
+        #     customer_cart, created = Cart.objects.get_or_create(user=request.COOKIES['sessionid'])
+        #     customer_cart.items.set([new_order.id])
+            
             
             
         # customer_cart = Cart.objects.get(user=request.session.session_key)
-        customer_cart.items.add(new_order.id)
+        # customer_cart.items.add(new_order.id)
         # customer_cart.items.add(169)
         # customer_cart.items.clear()
-        print(customer_cart)
-        
-        
+        # print(customer_cart)
         
         
         return render (request, 'cart.html', context)    
     
     
     ## GETTING USER ID FROM SESSION TO CREATE A CART RELATED ## 
+
     
-    teste = request.session
+    # teste = request.session
     # teste['te'] = {'testando_session': 1231112}
-    
-    print(teste.keys())
+    # print(Session.objects.get(pk='x4xnbgy61p7y4favuginzxxsedgoemme').get_decoded())
+
 
     # s = Session.objects.get(pk=request.session.session_key)
-    # print(request.META)
+    # print(s)
     print('-+-'*15)
     # print(s.get_decoded())  
     # if '_auth_user_hash' in s.get_decoded():
