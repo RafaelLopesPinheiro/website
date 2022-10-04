@@ -22,7 +22,7 @@ export class Api {
             url: url,
             
         };
-        console.log(requestData)
+        // console.log(requestData)
         return await fetch(url, requestData).then(res => res.json());
     }
 }

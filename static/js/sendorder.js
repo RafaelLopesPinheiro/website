@@ -28,10 +28,10 @@ function loadSendButtonEvent() {
     const sendButton = document.getElementById("sendOrderButton");
     
     sendButton.addEventListener("click", event => {
-        event.preventDefault()
+        // event.preventDefault()
 
         sendOrder.sendOrderData()
     })
 }
-console.log(window.location.href.split('/')[4])
+// console.log(window.location.href.split('/')[4])
 loadSendButtonEvent()
