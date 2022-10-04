@@ -38,8 +38,6 @@ class QuentinhaDetailView(DetailView):
         return get_object_or_404(Quentinha, id=id_)
 
 
-    
-
 class BookView(FormView):
     template_name = 'finish_order.html'
     form_class = Book_form 
@@ -54,31 +52,6 @@ class BebidasView(ListView):
     queryset = Bebida.objects.all()
     print(queryset)
     
-    
-    
-# @login_required
-# def product_create_view(request, id):
-#     form = Book_form(request.POST or None)
-#     object = Quentinha.objects.get(id=id)
-#     context = {
-#         'form': form,
-#         'object': object,
-#     }
-    
-#     if request.method == "POST":
-#         form = Book_form(request.POST)
-        
-#         if form.is_valid() and form.cleaned_data:
-#             print(form.cleaned_data.get('acompanhamentos'))
-#             Order.objects.create(user=request.user, acomps=form.cleaned_data,
-#                                  acomps_1=form.cleaned_data, item=object)
-#             return render (request, "cart.html", context)
-#         else:
-#             print(form.errors)
-
-#     return render (request, "product_detail.html", context)
-
-
 
  ## FINISH_ORDER ## 
 from django.contrib.auth.base_user import AbstractBaseUser

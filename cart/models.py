@@ -1,6 +1,6 @@
 from pyexpat import model
 from django.db import models
-from products.models import Acompanhamentos, Quentinha
+from products.models import Quentinha
 
 # Create your models here.
 class Order(models.Model):
@@ -8,7 +8,7 @@ class Order(models.Model):
     user = models.CharField(max_length=50, blank=True)
     qnty = models.IntegerField(default=1)
     item = models.CharField(max_length=100)
-    acomps = models.CharField(max_length=200, blank=True)
+    # acomps = models.CharField(max_length=200, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     observation = models.CharField(max_length=250, blank=True)
 

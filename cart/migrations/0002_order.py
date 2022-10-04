@@ -18,7 +18,6 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('date_created', models.DateTimeField(auto_now_add=True, null=True)),
                 ('status', models.CharField(choices=[('Pending', 'Pending'), ('Out for delivery', 'Out for delivery'), ('Delivered', 'Delivered')], max_length=150, null=True)),
-                ('acompanhamentos', models.ManyToManyField(to='products.acompanhamentos')),
                 ('product', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='products.quentinha')),
             ],
         ),
