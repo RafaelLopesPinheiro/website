@@ -4,8 +4,13 @@
 {% block content %}
 <div class='container'>
     <h1>Seu Carrinho </h1>
-    <p>{{object_list}}
+    {% for obj in object %}
+    {{obj.price}}
+    {%endfor%}
 
+
+
+    <p>{{object_list}}
     {% for instance in object_list %}
     {% if request.user.username in instance.user %}
     <div class='row justify-content-center'>

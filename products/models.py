@@ -44,7 +44,6 @@ class Bebida(models.Model):
         return self.title
 
 
-
 class Extra(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=150)

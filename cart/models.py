@@ -8,7 +8,6 @@ class Order(models.Model):
     user = models.CharField(max_length=50, blank=True)
     qnty = models.IntegerField(default=1)
     item = models.CharField(max_length=100)
-    # acomps = models.CharField(max_length=200, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     observation = models.CharField(max_length=250, blank=True)
 
@@ -20,7 +19,6 @@ class Order(models.Model):
     
     def __str__(self):
         return self.user
-    
     
 
 class Cart(models.Model):

@@ -54,7 +54,6 @@ class BebidasView(ListView):
     
 
  ## FINISH_ORDER ## 
-from django.contrib.auth.base_user import AbstractBaseUser
 import json
 @csrf_exempt
 def product_create_view(request, id): #id
