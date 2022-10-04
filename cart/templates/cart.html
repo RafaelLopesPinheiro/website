@@ -11,8 +11,8 @@
     <div class='row justify-content-center'>
         <div class='card text-left'> 
             <div class='card-head'>Pedido:</div>
-            {% comment %} <p>{{instance.user}}</p> {% endcomment %}
             
+            <p>{{instance.user}}</p>
             <p>{{instance.item }}</p>
             <p>{{instance.acomps | cut:"'amount':"|cut:"'"|cut:"name:"|cut:"[{"|cut:"}]"|cut:"{"|cut:"}"}}</p>
             <p>{{instance.date_created }} 
@@ -22,6 +22,9 @@
     </div>
 
     {%endif%}
+    {%endfor%}
+    <p>{% for object in object_list%}</p>
+    {{object}}
     {%endfor%}
 </div>
 {% endblock %}

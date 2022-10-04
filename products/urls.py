@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from .views import (BebidasView, QuentinhasListView, 
-                    FeijoadaView, QuentinhaDetailView, home_view,
-                    BookView, product_create_view)
+                    FeijoadaView, home_view, product_create_view)
 
 
 app_name='products'
