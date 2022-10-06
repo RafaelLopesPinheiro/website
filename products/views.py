@@ -59,6 +59,7 @@ import json
 def product_create_view(request, id): #id
     object = Acompanhamentos.objects.all()
     item_id = Quentinha.objects.get(id=id)
+    print(item_id)
     context = {
         'object': object,
         'item': item_id,
@@ -72,20 +73,20 @@ def product_create_view(request, id): #id
         
         ## THIS ONE ONLY WORK WITH GET TO UPDATE ITEMS ON CART 
         try: 
-            new_order = Order.objects.create(user=request.user.id, item=item_id, acomps_1=clean_order[0])
+            new_order = Order.objects.create(user=request.user.id, item_ordered=item_id, acomps_1=clean_order[0])
             device = request.user.id
         except:
-            new_order = Order.objects.create(user=device, item=item_id, acomps_1=clean_order[0])
+            new_order = Order.objects.create(user=device, item_ordered=item_id, acomps_1=clean_order[0])
             pass
 
 
         for i,j in enumerate(clean_order):    
             if(i == 1):
-                Order.objects.filter(user=device, item=item_id).update(acomps_2 = j)
+                Order.objects.filter(user=device, item_ordered=item_id).update(acomps_2 = j)
             elif(i == 2):
-                Order.objects.filter(user=device, item=item_id).update(acomps_3 = j)
+                Order.objects.filter(user=device, item_ordered=item_id).update(acomps_3 = j)
             elif(i == 3):
-                Order.objects.filter(user=device, item=item_id).update(acomps_4 = j)
+                Order.objects.filter(user=device, item_ordered=item_id).update(acomps_4 = j)
                 
         
         ## USE SET OR ADD METHOD TO SELECT THE ORDER RELATED WITH THE CART USER ##

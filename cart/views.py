@@ -3,14 +3,26 @@ from django.views.generic import ListView, DetailView
 from .models import Cart, Order
 from products.models import Quentinha
 from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.contrib.auth.decorators import login_required
-# from django.utils.decorators import method_decorator
 
 # Create your views here.
 def cart_view(request, *args, **kwargs):
     object = Quentinha.objects.all()
-    orders = Order.objects.get(user=request.user.id)
-    context = {'object': object}
+    # orders = Order.objects.get(user=request.user.id).get_sum
+    try:
+        cart = Cart.objects.get(user=request.user.id)
+    except:
+        cart = Cart.objects.get(user=request.COOKIES['device'])
+    
+    total_sum = 0
+    for obj in cart.items.all():
+        total_sum += obj.get_sum
+
+
+    context = {
+        'object': object,
+        'total': total_sum,
+        'cart': cart.items.all()}
+    
     return render(request, "cart.html", context)
 
 
