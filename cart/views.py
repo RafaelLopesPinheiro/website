@@ -35,3 +35,8 @@ class CartView(LoginRequiredMixin, ListView):
     #     queryset = Cart.objects.filter(user=request.user)
     #     return queryset
     
+    
+class FinishView(ListView):
+    template_name = 'finish_order.html'
+    queryset = Cart.objects.all()    
+    

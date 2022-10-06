@@ -44,7 +44,10 @@
             {%endfor%}
     <h3 class='text-right'>Total</h3>
     <h4 class='fw-bold text-right'>R$ {{total | floatformat:'2' }}</h4>
-    <p class='text-right'><button type="button" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Confirmar</button>
+    <p class='text-right'>
+        <a href="/finish">
+            <button type="button" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Confirmar</button>
+        </a>
     </p>
     </div>
 {% endblock %}
