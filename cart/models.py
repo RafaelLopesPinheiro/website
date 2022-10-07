@@ -1,6 +1,5 @@
 from django.db import models
 from products.models import Quentinha
-
 # Create your models here.
 class Order(models.Model):
     ## add user here 
@@ -48,9 +47,16 @@ class Cart(models.Model):
         return total        
     
 
+PAYMENT_CHOICES = [
+    ('D','Dinheiro'),
+    ('M', 'Cartão')
+]
+
+
+
 class Customer(models.Model):
-    name = models.CharField(max_length=100, null=True)
-    address = models.CharField(max_length=250, null=True)
-    device = models.CharField(max_length=50, null=True)
-    phone = models.CharField(max_length=25, null=True)
-    
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=250)
+    device = models.CharField(max_length=50, null=True, blank=True)
+    phone = models.CharField(max_length=11)
+    payment = models.CharField(max_length=10, choices=PAYMENT_CHOICES)
