@@ -1,4 +1,3 @@
-from xml.dom import ValidationErr
 from django import forms
 from cart.models import Order
 from .models import Acompanhamentos, Extra, Quentinha
