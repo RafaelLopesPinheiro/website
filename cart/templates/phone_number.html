@@ -1,16 +1,13 @@
-<!DOCTYPE html>
 {% extends 'home.html' %}
 {% load static %}
-
-
 {% block content %}
 
-<p class='fs-1'> Finish page </p>
-<form  method='POST'>
+
+<p class='fs-2'>Phone Page</p>
+<form method='POST'>
     {% csrf_token %}
     {{form.as_p}}
-    
-    <button type='submit' class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'> CONFIRM</button>
+    <button type='submit' onclick={% url 'cart:finish'%} class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'> CONFIRM</button>
 </form>
 
 
@@ -19,4 +16,3 @@
 <script src={% static '/js/jquery.mask.min.js' %}></script>
 <script src={% static '/js/mask.js' %} type='module'></script>
 {% endblock content %}
-

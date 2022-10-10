@@ -1,14 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.views.generic import ListView, DetailView
-from .models import Cart, Order
+from .models import Cart, Order, Customer
 from products.models import Quentinha
-from .forms import customer_data
+from .forms import Phone_data, customer_data
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-# Create your views here.
+
 def cart_view(request, *args, **kwargs):
     object = Quentinha.objects.all()
-    # orders = Order.objects.get(user=request.user.id).get_sum
     try:
         cart = Cart.objects.get(user=request.user.id)
     except:
@@ -38,11 +38,22 @@ class CartView(LoginRequiredMixin, ListView):
     
     
     
+def PhonePage(request):
+    form = Phone_data(request.POST or None)
+    context = {'form': form}
     
-# class FinishView(ListView):
-#     template_name = 'finish_order.html'
-#     queryset = customer_data()
+    if request.method == 'POST':
+        form = Phone_data(request.POST)
+        if form.is_valid():
+            
+            request.session['phone_numb'] = request.POST['phone']
+            print(request.session['phone_numb'])
+            phone = request.session['phone_numb']
+            customer, created = Customer.objects.get_or_create(phone=phone)
+            print(customer)
+            return redirect('cart:finish')
     
+    return render(request, 'phone_number.html', context)
 
         
         
@@ -52,9 +63,15 @@ def FinishView(request):
     form = customer_data(request.POST or None)
     context = {'form': form }
     
+    phone_numb = request.session.get('phone_numb')
+    print('-*'*10)
+    print(phone_numb)
+    # print(customer_data(phone='(22) 22222-2222'))
+    
     if request.method == "POST":
         form = customer_data(request.POST)
         if form.is_valid():
+            form.phone = phone_numb
             form.save()
             print(form.cleaned_data)
             return render(request, 'thanks.html')

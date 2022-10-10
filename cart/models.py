@@ -47,11 +47,11 @@ class Cart(models.Model):
         return total        
     
 
+
 PAYMENT_CHOICES = [
     ('D','Dinheiro'),
     ('M', 'Cartão')
 ]
-
 
 
 class Customer(models.Model):
@@ -64,4 +64,4 @@ class Customer(models.Model):
     
     
     def __str__(self):
-        return self.name
+        return self.name or self.phone
