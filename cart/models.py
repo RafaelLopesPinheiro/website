@@ -58,5 +58,10 @@ class Customer(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=250)
     device = models.CharField(max_length=50, null=True, blank=True)
-    phone = models.CharField(max_length=11)
+    phone = models.CharField(max_length=15)
     payment = models.CharField(max_length=10, choices=PAYMENT_CHOICES)
+    cart_activity = models.ManyToManyField(Cart)
+    
+    
+    def __str__(self):
+        return self.name

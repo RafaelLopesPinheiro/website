@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Cart, Order
 from products.models import Quentinha
-from .forms import user_data, customer_data
+from .forms import customer_data
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
@@ -37,9 +37,28 @@ class CartView(LoginRequiredMixin, ListView):
     #     return queryset
     
     
-class FinishView(ListView):
-    template_name = 'finish_order.html'
-    queryset = customer_data()
     
     
+# class FinishView(ListView):
+#     template_name = 'finish_order.html'
+#     queryset = customer_data()
+    
+
+        
+        
+        
+    
+def FinishView(request):
+    form = customer_data(request.POST or None)
+    context = {'form': form }
+    
+    if request.method == "POST":
+        form = customer_data(request.POST)
+        if form.is_valid():
+            form.save()
+            print(form.cleaned_data)
+            return render(request, 'thanks.html')
+        
+        
+    return render(request, 'finish_order.html', context)
     

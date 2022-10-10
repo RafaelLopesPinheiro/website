@@ -7,6 +7,6 @@ from django.contrib.auth.decorators import login_required
 app_name='cart'
 urlpatterns = [
     path('cart/', cart_view,  name='cart'),
-    path('finish/', FinishView.as_view(), name='finish'),
+    path('finish/', FinishView, name='finish'),
     
 ]
