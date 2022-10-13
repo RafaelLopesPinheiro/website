@@ -1,7 +1,6 @@
 from django import forms
 from .models import Customer
   
-## CHANGE TO MODEL FORM WITH ONLY PHONE FIELD AND SEARCH IN DB IF HAVE OTHER FIELDS FILLED
 class Phone_data(forms.ModelForm):
         
     class Meta:
@@ -18,6 +17,12 @@ class customer_data(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['name', 'address', 'payment']
+        
+        
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['payment'].widget.select()    
+    
         
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import FinishView, cart_view, CartView, PhonePage
+from .views import FinishView, cart_view, PhonePage
 from django.contrib.auth.decorators import login_required
 
 

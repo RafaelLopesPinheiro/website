@@ -32,10 +32,8 @@ class Cart(models.Model):
         ('Delivered', 'Delivered'),
     )
 
-    # customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
     user = models.CharField(max_length=150, null=True)
     items = models.ManyToManyField(Order)
-    product = models.ForeignKey(Quentinha, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=150, null=True, choices=STATUS, default='Not Confirmed')
     
@@ -46,11 +44,17 @@ class Cart(models.Model):
             total += i.get_sum
         return total        
     
+    def __str__(self):
+        return self.user
+    
+    
+    
 
 
 PAYMENT_CHOICES = [
     ('D','Dinheiro'),
-    ('M', 'Cartão')
+    ('CD', 'Cartão de Debito'),
+    ('CC', 'Cartão de Crédito')
 ]
 
 
