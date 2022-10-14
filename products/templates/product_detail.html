@@ -42,10 +42,8 @@
     <input type='text' placeholder ='observações'></input>
     <h5 style="text-align: right">Valor: R${{ item.price|floatformat:2 }}</h5>
 
-    <button id="sendOrderButton"  type="button" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Confirmar</button>
+    <button id="sendOrderButton" onclick="location.href={% url 'cart:cart'%}"  type="button" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Confirmar</button>
   </div>
-  {% comment %} ADD ON BUTTON ABOVE TO SAVE ITEMS ON BACKEND {% endcomment %}
-{% comment %} onclick="location.href={% url 'cart:cart'%}" {% endcomment %}
 
 
   <script src="{% static '/js/incrementButtons.js' %}"> </script>

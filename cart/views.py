@@ -61,7 +61,7 @@ def FinishView(request):
     for val in cart:
         total_cart += val.get_sum
         
-    
+        
     try:
         user.device = request.COOKIES['device']
     except:
@@ -74,22 +74,30 @@ def FinishView(request):
         form = customer_data()
     
     
-    
     context = {'form': form ,
                'total': total_cart}
+    
+    
+    cart = Cart.objects.get(user=request.COOKIES['device'])
+    print(cart.id)
+    
     
     if request.method == "POST":
         form = customer_data(request.POST)
         if form.is_valid():
-            form.save(commit=False)
-            
+            # form.save(commit=False)
             try:
                 cart = Cart.objects.filter(user=request.COOKIES['device'])
-                cart.update(status='Confirmed', user=form.cleaned_data.get('name'))
+                cart.update(status='Confirmed')
                 
                 user = Customer.objects.filter(phone=request.session.get('phone_numb'))
-                print(request.session.get('phone_numb'))
-                user.update(phone=request.session.get('phone_numb'), name=form.cleaned_data.get('name'))
+                user.update(phone=request.session.get('phone_numb'), name=form.cleaned_data.get('name'),
+                            device=request.COOKIES['device'], address=form.cleaned_data.get('address'),
+                            payment=form.cleaned_data.get('payment'))
+                
+                user = Customer.objects.get(phone=request.session.get('phone_numb'))
+                cart = Cart.objects.get(user=request.COOKIES['device'])
+                user.cart_activity.add(cart)
                 
             except:
                 Cart.objects.filter(user=request.user.id).update(status='Confirmed' )

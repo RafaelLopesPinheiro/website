@@ -1,6 +1,3 @@
-
-from distutils.command.clean import clean
-import imp
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, FormView, CreateView, TemplateView
@@ -10,7 +7,7 @@ from django.utils.functional import LazyObject as _
 from cart.models import Cart, Order, Customer
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
-import datetime as dt
+import json
 # Create your views here.
 
 
@@ -34,7 +31,7 @@ class QuentinhaDetailView(DetailView):
     form_class = Book_form
     
     def get_object(self):
-        id_ = self.kwargs.get("id") ## ID of Quentinha
+        id_ = self.kwargs.get("id")
         return get_object_or_404(Quentinha, id=id_)
 
 
@@ -53,25 +50,35 @@ class BebidasView(ListView):
     print(queryset)
     
 
- ## FINISH_ORDER ## 
-import json
+def bebidas_detail_view(request, id):
+    template_name = 'bebidas_detail.html'
+    queryset = Bebida.objects.all()
+    
+    return render(request, template_name, {'bebidas':queryset})
+
+
+
+
+
+
 @csrf_exempt
-def product_create_view(request, id): #id
+def product_create_view(request, id):
+    """
+    Create order with items selected and pass acomps attached to database
+    """
+    
     object = Acompanhamentos.objects.all()
     item_id = Quentinha.objects.get(id=id)
-    print(item_id)
     context = {
         'object': object,
         'item': item_id,
     }
 
-    print('---'*15)
     if request.method == "POST":
         received_json = json.loads(request.body)
         clean_order = [j for j in received_json if j['amount'] != '0']          
         device = request.COOKIES['device']
         
-        ## THIS ONE ONLY WORK WITH GET TO UPDATE ITEMS ON CART 
         try: 
             new_order = Order.objects.create(user=request.user.id, item_ordered=item_id, acomps_1=clean_order[0])
             device = request.user.id
