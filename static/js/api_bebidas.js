@@ -6,10 +6,11 @@ export class Api {
         // "X-CSRFToken": localStorage.getItem("CSRFToken"),
         
     };
-    
+
+
 
     static async sendOrder(data) {
-        const url = this.baseUrl + "quentinhas/" + window.location.href.split('/')[4];
+        const url = this.baseUrl + "bebidas/" + window.location.href.split('/')[4];
         // var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
         // console.log(csrftoken)
         const requestData = {
@@ -22,7 +23,7 @@ export class Api {
             url: url,
             
         };
-        // console.log(requestData)
+
         return await fetch(url, requestData).then(res => res.json());
     }
 }

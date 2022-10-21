@@ -2,14 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, FormView, CreateView, TemplateView
 from .models import Acompanhamentos, Quentinha, Extra, Bebida, Feijoada
-from .forms import Acompanha_Form, Book_form
+from .forms import Acompanha_Form, Bebidas_form, Book_form
 from django.utils.functional import LazyObject as _
 from cart.models import Cart, Order, Customer
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 import json
 # Create your views here.
-
 
 def home_view(request, *args, **kwargs):
     return render(request,"home.html", {})
@@ -25,39 +24,40 @@ class QuentinhasListView(ListView):
     queryset = Quentinha.objects.all()
     
 
-class QuentinhaDetailView(DetailView):
-    template_name = 'product_detail.html'
-    queryset = Quentinha.objects.all()
-    form_class = Book_form
-    
-    def get_object(self):
-        id_ = self.kwargs.get("id")
-        return get_object_or_404(Quentinha, id=id_)
-
-
-class BookView(FormView):
-    template_name = 'finish_order.html'
-    form_class = Book_form 
-    success_url = '/'
-    
-    def form_valid(request, form):
-        return super().form_valid(form)
-
-
 class BebidasView(ListView):
     template_name = 'bebidas.html'
     queryset = Bebida.objects.all()
     print(queryset)
     
 
+# @csrf_exempt
 def bebidas_detail_view(request, id):
     template_name = 'bebidas_detail.html'
     queryset = Bebida.objects.all()
+    form = Bebidas_form(request.POST or None)
+    context = {
+        'bebidas': queryset,
+        'form': form
+    }
     
-    return render(request, template_name, {'bebidas':queryset})
-
-
-
+    
+    if request.method == "POST":
+        if form.is_valid():
+            print(form.cleaned_data['bebidas'])
+            device = request.COOKIES['device']
+            print(device)
+            
+            
+            cart, created = Cart.objects.get_or_create(user=device)
+            print(cart.bebida_choices.add(id))
+            
+   
+        # else:
+            # form.errors
+                
+        
+    
+    return render(request, template_name, context)
 
 
 

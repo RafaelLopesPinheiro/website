@@ -43,6 +43,17 @@ class Bebida(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse("products:bebidas-detail", kwargs={"id": self.id})
+    
+    
+
+class Bebidas_choices(models.Model):
+    sabor = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.sabor
+    
 
 class Extra(models.Model):
     title = models.CharField(max_length=50)

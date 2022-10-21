@@ -12,13 +12,11 @@
     <td>
         <tr>
             <a href="{{instance.get_absolute_url}}"> <h2 style='text-align:center'> {{instance.title}} </h2></a>
-            <p> <img src="{% static 'img/cocacola.jpg' %}" height='70' width='70' style='float: right'></img></p>
+            {% comment %} <p> <img src="{% static 'img/cocacola.jpg' %}" height='70' width='70' style='float: right'></img></p> {% endcomment %}
             <h3><p style='text-align:center' class='px-20'> R$ {{instance.price|floatformat:2}}</p></h3>
         </tr>
     </td>
-    <td>
-        <a href="{% url 'products:bebidas_detail' %}"><p class='fs-2 text-center'>Refrigerante Lata</p></a>
-    </td>
+
     </tbody>
     </table>
 

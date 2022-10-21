@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 from .views import (BebidasView, QuentinhasListView, 
-                    FeijoadaView, QuentinhaDetailView, bebidas_detail_view, home_view,
-                    BookView, product_create_view)
+                    FeijoadaView, bebidas_detail_view, home_view,
+                    product_create_view)
 
 
 app_name='products'
@@ -12,5 +12,5 @@ urlpatterns = [
     path('quentinhas/', QuentinhasListView.as_view(), name='quentinha-list'),
     path('quentinhas/<int:id>', product_create_view, name='quentinha-detail'),   
     path('bebidas/', BebidasView.as_view(), name='bebidas'),
-    path('bebidas/<int:id>', bebidas_detail_view, name='bebidas_detail')
+    path('bebidas/<int:id>', bebidas_detail_view, name='bebidas-detail')
 ]

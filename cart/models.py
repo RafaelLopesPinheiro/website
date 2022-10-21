@@ -1,11 +1,11 @@
 from django.db import models
-from products.models import Quentinha
+from products.models import Quentinha, Bebida
 # Create your models here.
 class Order(models.Model):
     ## add user here 
     user = models.CharField(max_length=50, blank=True)
     qnty = models.IntegerField(default=1)
-    item_ordered = models.ForeignKey(Quentinha, null=True, on_delete=models.SET_NULL)
+    item_ordered = models.ForeignKey(Quentinha, null=True, blank=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     observation = models.CharField(max_length=250, blank=True)
 
@@ -36,6 +36,18 @@ class Cart(models.Model):
     items = models.ManyToManyField(Order)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=150, null=True, choices=STATUS, default='Not Confirmed')
+    bebida_choices = models.ManyToManyField(Bebida, blank=True, null=True)
+    
+    
+    @property
+    def get_total_bebida(self):
+        total = 0 
+        for i in self.bebida_choices.all():
+            total += i.price
+        return total
+    
+    
+    
     
     @property
     def get_total_sum(self):
