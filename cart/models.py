@@ -3,6 +3,7 @@ from products.models import Quentinha, Bebida
 # Create your models here.
 class Order(models.Model):
     ## add user here 
+    order_id = models.CharField(max_length=25, null=True)
     user = models.CharField(max_length=50, blank=True)
     qnty = models.IntegerField(default=1)
     item_ordered = models.ForeignKey(Quentinha, null=True, blank=True, on_delete=models.SET_NULL)
@@ -15,7 +16,7 @@ class Order(models.Model):
     acomps_4 = models.CharField(max_length=100, blank=True)
         
     def __str__(self):
-        return self.user
+        return self.order_id or self.user
     
     @property
     def get_sum(self):
@@ -36,25 +37,21 @@ class Cart(models.Model):
     items = models.ManyToManyField(Order)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     status = models.CharField(max_length=150, null=True, choices=STATUS, default='Not Confirmed')
-    bebida_choices = models.ManyToManyField(Bebida, blank=True, null=True)
+    bebida_choices = models.ManyToManyField(Bebida, blank=True)
     
-    
-    @property
-    def get_total_bebida(self):
-        total = 0 
-        for i in self.bebida_choices.all():
-            total += i.price
-        return total
-    
-    
-    
+     
     
     @property
     def get_total_sum(self):
         total = 0
         for i in self.items.all():
+            total += i.get_sum      
+
+        for i in self.bebida_choices.all():
             total += i.get_sum
-        return total        
+            
+        return total
+
     
     def __str__(self):
         return self.user

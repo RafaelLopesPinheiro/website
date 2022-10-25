@@ -1,35 +1,33 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views.generic import ListView, DetailView
+# from django.views.generic import ListView, DetailView
 from .models import Cart, Order, Customer
 from products.models import Quentinha
 from .forms import Phone_data, customer_data
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def cart_view(request):
     object = Quentinha.objects.all()
+    
+    # cart = Cart.objects.get(user=request.COOKIES['device'])
+    
     try:
         cart = Cart.objects.get(user=request.user.id)
     except:
         cart = Cart.objects.get(user=request.COOKIES['device'])
-    
-    total_sum = 0
-    for obj in cart.items.all():
-        total_sum += obj.get_sum
-
+ 
+ 
     request.session['cart_id'] = cart.id
     context = {
         'object': object,
-        'total': total_sum,
-        'cart': cart.items.all()}
+        'total': cart.get_total_sum,
+        'cart_items': cart.items.all(),
+        'bebidas': cart.bebida_choices.all(),
+        'cart': cart}
     
     return render(request, "cart.html", context)
-
-
+ 
     
-    
-## ADD THE SEARCH PASSED FROM PHONE PAGE TO FILTER DE DB IF ALREADY HAVE SOME DATA
 def PhonePage(request):
     form = Phone_data(request.POST or None)
     context = {'form': form}
@@ -51,17 +49,11 @@ def FinishView(request):
     
     try:
         cart = Cart.objects.get(user=request.user.id)
-        cart = cart.items.all()
+        
     except:
         cart = Cart.objects.get(user=request.COOKIES['device'])
-        cart = cart.items.all()
-    
-    
-    total_cart = 0
-    for val in cart:
-        total_cart += val.get_sum
-        
-        
+
+
     try:
         user.device = request.COOKIES['device']
     except:
@@ -75,7 +67,7 @@ def FinishView(request):
     
     
     context = {'form': form ,
-               'total': total_cart}
+               'total': cart.get_total_sum}
     
     
     cart = Cart.objects.get(user=request.COOKIES['device'])

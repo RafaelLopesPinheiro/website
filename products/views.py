@@ -30,7 +30,7 @@ class BebidasView(ListView):
     print(queryset)
     
 
-# @csrf_exempt
+
 def bebidas_detail_view(request, id):
     template_name = 'bebidas_detail.html'
     queryset = Bebida.objects.all()
@@ -44,18 +44,10 @@ def bebidas_detail_view(request, id):
     if request.method == "POST":
         if form.is_valid():
             print(form.cleaned_data['bebidas'])
-            device = request.COOKIES['device']
-            print(device)
-            
-            
+            device = request.COOKIES['device']            
             cart, created = Cart.objects.get_or_create(user=device)
-            print(cart.bebida_choices.add(id))
-            
-   
-        # else:
-            # form.errors
-                
-        
+
+                    
     
     return render(request, template_name, context)
 
@@ -79,28 +71,25 @@ def product_create_view(request, id):
         clean_order = [j for j in received_json if j['amount'] != '0']          
         device = request.COOKIES['device']
         
-        try: 
-            new_order = Order.objects.create(user=request.user.id, item_ordered=item_id, acomps_1=clean_order[0])
-            device = request.user.id
-        except:
-            new_order = Order.objects.create(user=device, item_ordered=item_id, acomps_1=clean_order[0])
-            pass
+        
+        new_order = Order.objects.create(user=device, item_ordered=item_id, acomps_1=clean_order[0])
+        Order.objects.filter(pk=new_order.id).update(order_id= "Order #" + str(new_order.id))
 
 
         for i,j in enumerate(clean_order):    
             if(i == 1):
-                Order.objects.filter(user=device, item_ordered=item_id).update(acomps_2 = j)
+                Order.objects.filter(pk=new_order.id, item_ordered=item_id).update(acomps_2 = j)
             elif(i == 2):
-                Order.objects.filter(user=device, item_ordered=item_id).update(acomps_3 = j)
+                Order.objects.filter(pk=new_order.id, item_ordered=item_id).update(acomps_3 = j)
             elif(i == 3):
-                Order.objects.filter(user=device, item_ordered=item_id).update(acomps_4 = j)
+                Order.objects.filter(pk=new_order.id, item_ordered=item_id).update(acomps_4 = j)
                 
         
         ## USE SET OR ADD METHOD TO SELECT THE ORDER RELATED WITH THE CART USER ##
         customer_cart, created = Cart.objects.get_or_create(user=device, status='Not Confirmed')
         customer_cart.items.add(new_order.id) 
         
-        return render (request, 'cart.html', context)    
+        return redirect('cart:cart')    
 
             
     return render (request, "product_detail.html", context)

@@ -14,7 +14,7 @@ class Quentinha(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=150)
     price = models.FloatField(null=True)
-    acompanhamentos = models.ManyToManyField(Acompanhamentos)
+    acompanhamentos = models.ManyToManyField(Acompanhamentos, blank=True)
     thumb = models.ImageField(blank=True)
 
     def get_absolute_url(self):
@@ -43,16 +43,24 @@ class Bebida(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def get_sum(self):
+        total = self.price
+        return total
+
+
     def get_absolute_url(self):
         return reverse("products:bebidas-detail", kwargs={"id": self.id})
     
     
 
-class Bebidas_choices(models.Model):
-    sabor = models.CharField(max_length=50)
+# class Bebidas_choices(models.Model):
+#     sabor = models.CharField(max_length=50)
     
-    def __str__(self):
-        return self.sabor
+#     def __str__(self):
+#         return self.sabor
+    
+
     
 
 class Extra(models.Model):

@@ -12,8 +12,9 @@
 
 {{form.as_p}}
 
-
-<button type='submit' id='sendOrderButton' class='btn btn-primary'>Confirm</button>
+<a href="{% url 'cart:cart' %}">
+    <button type='submit' id='sendOrderButton' onclick="locate.href = '{% url 'cart:cart'%}"' class='btn btn-primary'>Confirm</button>
+</a>
 </form>
 
 

@@ -4,55 +4,48 @@
 {% block content %}
 <div class='container'>
     <p class='fs-1 mb-1'>Seu Carrinho </p>
-    {% comment %} {% for obj in object %}
-    {{obj}}
-    {{obj.price}}
-    <p></p>
-    {%endfor%} {% endcomment %}
 
-    
-    {% for instance in object_list %}
-    {% if request.user.username in instance.user %}
-    <div class='row justify-content-center'>
-        <div class='card text-left'> 
-            <div class='card-head'>Pedido:</div>
-            {% comment %} <p>{{instance.user}}</p> {% endcomment %}
-            
-            <p>{{instance.item }}</p>
-            <p>{{instance.acomps | cut:"'amount':"|cut:"'"|cut:"name:"|cut:"[{"|cut:"}]"|cut:"{"|cut:"}"}}</p>
-            <p>{{instance.date_created }} 
-
-            {% comment %} <p>{{instance.acomps | slice:"31:-4" | cut:">" | cut:"<" | cut:"Acompanhamentos:" | cut:''}}</p> {% endcomment %}
-    </div>
-    </div>
-
-    {%endif%}
-    {%endfor%}
-
-    {% for i in cart %}
+    {% for i in cart_items %}
     <div class='row justify-content-center'>
         <div class='card text-left'> 
             {% comment %} <div class='card-head'><h5>Pedido:</h5></div> {% endcomment %}
-                <p class='fs-3 mb-1'>{{i.item_ordered}}</p>
-                <p class='mb-1'>{{i.acomps_1 | cut:"{'amount': '" | cut:"', 'name':" | cut:"'" |cut:"}"}}</p>
-                <p class='mb-1'>{{i.acomps_2 | cut:"{'amount': '" | cut:"', 'name':" | cut:"'" |cut:"}"}}</p>
-                <p class='mb-1'>{{i.acomps_3  | cut:"{'amount': '" | cut:"', 'name':" | cut:"'" |cut:"}"}}</p>
-                <p class='mb-1'>{{i.acomps_4  | cut:"{'amount': '" | cut:"', 'name':" | cut:"'" |cut:"}"}}</p>
+                <p class='fs-4 mb-1'>{{i.item_ordered}}</p>
+                <p class='px-10 mb-1'>{{i.acomps_1 | cut:"{'amount': '" | cut:"', 'name':" | cut:"'" |cut:"}"}}</p>
+                <p class='px-10 mb-1'>{{i.acomps_2 | cut:"{'amount': '" | cut:"', 'name':" | cut:"'" |cut:"}"}}</p>
+                <p class='px-10 mb-1'>{{i.acomps_3  | cut:"{'amount': '" | cut:"', 'name':" | cut:"'" |cut:"}"}}</p>
+                <p class='px-10 mb-1'>{{i.acomps_4  | cut:"{'amount': '" | cut:"', 'name':" | cut:"'" |cut:"}"}}</p>
                 <p class=' text-right mb-1'>Valor: R${{i.get_sum | floatformat:'2'}}</p>
                 
             </div>
         </div>
             {%endfor%}
+            {% if bebidas %}
+            <p class='fs-4 mb-1'>Bebidas</p>
+            {% endif %}
+            {% for i in bebidas%}
+            <div class='row justify-content-center'>
+                <div class='card text-left'> 
+                    <p class='px-10 mb-1 mt-1'>1 {{i.title }} </p>
+                    <p class=' text-right mb-1'>Valor: R${{i.get_sum | floatformat:'2'}}</p>
+                </div>
+            </div>
 
-            <p>{{cart.bebida_choices }} </p>
+            {% endfor %}
 
-            
+
     <h3 class='text-right'>Total</h3>
     <h4 class='fw-bold text-right'>R$ {{total | floatformat:'2' }}</h4>
     <p class='text-right'>
-        <a href="/phone">
-            <button type="button" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Confirmar</button>
-        </a>
+
+        {% if cart.status == "Not Confirmed" %}
+            {% if total > 15 %}
+                
+            <a href="/phone">
+                <button type="button" class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>Confirmar</button>
+            </a>
+            {% endif %}
+        {% endif %}
+
     </p>
     </div>
 {% endblock %}

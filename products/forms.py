@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ValidationError
 from cart.models import Order
-from .models import Acompanhamentos, Bebidas_choices, Extra, Quentinha
+from .models import Acompanhamentos, Extra, Quentinha
 
 ACOMP_CHOICES = [
     ('ARROZ_BRANCO','Arroz Branco'),
@@ -27,15 +27,6 @@ class Bebidas_form(forms.Form):
         if len(cleaned_data.get('bebidas')) != 1:
             raise ValidationError('You need to choose only one option.')
         
-        
-    # class Meta:
-    #     model = Bebidas_choices
-    #     fields = '__all__' 
-        
-    # def clean_data(self):
-    #     if len(self)>1:
-    #         raise ValidationError("Can only select one flavour")
-    
 
 
 class Book_form(forms.Form):
